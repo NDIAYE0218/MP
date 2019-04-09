@@ -1,45 +1,115 @@
 <div class="affiche" *ngIf="display">
+  <mat-card class="card-content">
+    <mat-card-header class="card-title">
+      <b>
+        <h1> Marché N°
+          <span *ngIf="marche.NumMarche.toString().length===1">{{marche.An}}-00{{marche.NumMarche}}</span>
+          <span *ngIf="marche.NumMarche.toString().length===2">{{marche.An}}-0{{marche.NumMarche}}</span>
+          <span *ngIf="marche.NumMarche.toString().length===3">{{marche.An}}-{{marche.NumMarche}}</span>
+        </h1>
+      </b>
+    </mat-card-header>
+    <h2>Information général</h2>
+    <table>
+      <tr>
+        <th>Objet</th>
+        <th>Nature</th>
+      </tr>
+      <tr>
+        <td>Alfreds Futterkiste</td>
+        <td>Maria Anders</td>
+      </tr>
+    </table>
+    <br>
+
+    <table>
+      <tr>
+        <th>Type Procedure</th>
+        <th>Forme et type de marché</th>
+      </tr>
+      <tr>
+        <td>Alfreds Futterkiste</td>
+        <td>Maria Anders</td>
+      </tr>
+    </table>
+    <br>
+    <h2>Auteur</h2>
+    <table>
+      <tr>
+        <th>Direction</th>
+        <th>Service</th>
+        <th>Contacte</th>
+      </tr>
+      <tr>
+        <td>Alfreds Futterkiste</td>
+        <td>Maria Anders</td>
+        <td>Maria Anders</td>
+      </tr>
+    </table>
+    <br>
+    <h2>Montants</h2>
+    <table>
+        <tr>
+          <th>Montant minimum</th>
+          <th>Montant déboursé</th>
+          <th>Montant maximum</th>
+        </tr>
+        <tr>
+          <td>Alfreds Futterkiste</td>
+          <td><b>Maria Anders</b></td>
+          <td>Maria Anders</td>
+        </tr>
+    </table>
+    <h2>Titulaire et sous traitants</h2>
+    <table>
+        <tr >
+          <th class="tra">Type</th>
+          <th class="tra">entreprise</th>
+          <th class="tra">contact</th>
+          <th class="tra">Email</th>
+          <th class="tra">Adresse</th>
+        </tr>
+        <tr >
+          <td>Alfreds Futterkiste</td>
+          <td>Maria Anders</td>
+          <td>Maria Anders</td>
+          <td>Maria Anders</td>
+          <td>Maria Anders</td>
+        </tr>
+    </table>
+    <br>
+    <h2>Dates</h2>
+    <table>
+        <tr >
+          <th class="tra">Date de notification</th>
+          <th class="tra">Date de cloture</th>
+          <th class="tra">Nombre de redirections</th>
+          <th class="tra">Durée initiale</th>
+          <th class="tra">Durée totale</th>
+        </tr>
+        <tr >
+          <td>Alfreds Futterkiste</td>
+          <td>Maria Anders</td>
+          <td>Maria Anders</td>
+          <td>Maria Anders</td>
+          <td>Maria Anders</td>
+        </tr>
+    </table>
+    <br>
+    <h2>Fichier associés</h2>
+    <table>
+        <tr>
+          <th>Nom</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>Alfreds Futterkiste</td>
+          <td>Maria Anders</td>
+        </tr>
+      </table>
+  </mat-card>
+ 
   <div class="titre">
-    <b>
-      <h1> Marché N°
-        <span *ngIf="marche.NumMarche.toString().length===1">{{marche.An}}-00{{marche.NumMarche}}</span>
-        <span *ngIf="marche.NumMarche.toString().length===2">{{marche.An}}-0{{marche.NumMarche}}</span>
-        <span *ngIf="marche.NumMarche.toString().length===3">{{marche.An}}-{{marche.NumMarche}}</span>
-      </h1>
-    </b>
   </div>
   <br>
-  <div class="contenue">
-    <div><b>Direction Generale: </b> {{marche.DG}}</div><br>
-    <div><b>Service : </b> {{marche.serv}}</div><br>
-    <div><b>Objet : </b> {{marche.objet}}</div><br>
-    <div><b>Montant marché : </b> {{marche.MontantTotal}}</div><br>
-    <div><b>Contacte : </b> {{marche.Contacte}}</div><br>
-    <div><b>Type procedure : </b> {{marche.Type_process}}/{{marche.Format_process}}</div><br>
-    <div><b>Date de cloture : </b> {{marche.Duree[0].D_clot}} </div><br>
-    <div><b>Durée initiale : </b> {{marche.Duree[0].D_init}}</div><br>
-    <div><b>Durée total : </b> {{marche.Duree[0].D_tot}}</div><br>
-    <div><b>Prochaine date de notification : </b> {{marche.DateNotific}}</div><br>
-    <div><b>Observation : </b> {{marche.Observation}}</div><br>
-    <div *ngIf="reconduction">
-    <div *ngIf="marche.Format_process.toUpperCase()=='RECONDUCTIBLE'"><b>Total des reconductions : </b>
-      {{marche.Duree[0].nb_rec}}</div><br>
-    <div *ngIf="marche.Format_process.toUpperCase()=='RECONDUCTIBLE'" class="rec"><b>Detail des reconductions:</b><br><br>
-          <span *ngIf="marche.Relance.length==0">Aucune reconduction pour le moment</span>
-          <div class="rec-det" *ngFor="let relance of marche.Relance; index as i">
-            <b> 	&nbsp;N°</b> {{i+1}} <br>
-            <b> 	&nbsp;Date: </b> {{relance.date}} <br> 
-            <b> 	&nbsp;Type: </b> {{relance.type}} <br> 
-            <b> 	&nbsp;Dure: </b> {{relance.dure}} <br> 
-          </div>
-    </div>
-  </div>
-  <div *ngIf="disp_annee">
-      <br>
-      <div><b>1 AN : </b> {{marche.Annee[0].DRecond}}</div><br>
-      <div><b>2 ANS : </b> {{marche.Annee[1].DRecond}}</div><br>
-      <div><b>3 ANS : </b> {{marche.Annee[2].DRecond}}</div><br>
-  </div>
-    <br>
 </div>
-    

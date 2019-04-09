@@ -1,6 +1,5 @@
 .affiche{
     font-size: 90%;
-    font-family: 'Courier New', Courier, monospace;
     width: 100%;
     margin-top: 3%;
 }
@@ -36,4 +35,30 @@
     margin-left: auto;
     margin-right: auto;
     text-align: left;
+}
+.card-title {
+    background:  rgba(24, 56, 170, 0.781);
+    color: #ff4081;
+    justify-content: center;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+.card-content{
+    border-style: solid;
+    border-color: #ff4081;
+    justify-content: center;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+table {
+    width: 100%;
+    text-align: left;
+  }
+th,tr{
+    width: 50%;
+}
+.tra{
+    width: 25%;
 }
