@@ -62,6 +62,10 @@ module.exports = {
           }
     }
     ,
+    downoald_file: function(req,res){
+        var __dirname = "./fichier_marche/"
+        res.sendFile(req.params.nomfichier, { root: __dirname });
+    },
     uploderMarche: function (req, res) {
         //cette fonction se sert de la sous fonction traiteur_upload pour inserer les marché un par un 
         var Dossier_up = "./uploder/"

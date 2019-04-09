@@ -8,15 +8,17 @@
   .tgd{
     border: 1px solid black;
   }
-  .tgd-cell{
-    border: 0.5px solid rgb(24, 56, 170);
-  }
+
   table {
     width: 100%;
 }
 th{
   font-size: 18px;
   color: rgb(24, 56, 170);
+}
+tr{
+  font-size: 14px;
+  color: #ff4081;
 }
 
 .mat-column-right {

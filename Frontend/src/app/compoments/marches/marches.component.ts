@@ -51,21 +51,10 @@ export class MarchesComponent implements OnInit {
           'Suppression reussis!',
           "le contrat "+numstr+" a bien été supprimé",
           'success'
-        ).then(()=>{window.location.reload()})
+        ).then(()=>{this.fetchdata()})
       }
     })
   }
-  reconduction_detail(Relance){
-    var Message=""
-    for(var i=0;i<Relance.length;i++){
-      Message+="<div style=\"text-align: left\">"+(i+1)+":<br><t><b>Type:</b> "+Relance[i].type+ "<br><t><b>Date:</b> "+Relance[i].date+"<br><t> <b>Duré:</b>"+Relance[i].dure+" </div>"
-    }
-    if(Relance.length!=0)
-    swal("Reconduction:",Message)
-    else
-    swal("a ce jour aucune reconduite n'a été effectué sur ce contrat")
-  }
- 
   rechercher(anne,numero){
     if(anne.length>0)
     {
@@ -80,9 +69,5 @@ export class MarchesComponent implements OnInit {
     else{
       this.router.navigate(['/marches/'+numero]);
     }
-  }
-  disp_annee(annee){
-    //verifie l'existance d'une 
-    return (typeof annee[0] != 'undefined')
   }
 }

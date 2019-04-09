@@ -24,6 +24,7 @@ module.exports = function(app) {
     .get('/Marches/:an',Marches.rechercherMarcher)
     .post('/Marches',Marches.relancerMarcher)
     .post('/Marche/upload',Marches.uploderMarche)
+    .get('/file_marche/:nomfichier',Marches.downoald_file)
     .post('/Marche/file_marche',Marches.Associer_File_marche)
     //.post('/Marche/upload',Marches.uploderMarche) //pour l'ajout des marché depuis un fichier CSV ou .xlsx
     //route des statistiques
