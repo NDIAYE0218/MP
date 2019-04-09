@@ -1,0 +1,32 @@
+<div>
+  <br>
+  <mat-card>
+    <button mat-raised-button color="primary" routerLink="/direction/ajouter">Creer une Direction</button>&nbsp;
+    <button mat-raised-button color="accent" routerLink="/marche/ajouter">Creer un Marché</button>
+    <br><br>
+    <mat-divider></mat-divider>
+    <br>
+    <table mat-table [dataSource]="directions">
+      <ng-container matColumnDef="NumDG">
+        <th mat-header-cell *matHeaderCellDef>NumDG</th>
+        <td mat-cell *matCellDef="let element"> {{element.NumDG}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Nom">
+        <th mat-header-cell *matHeaderCellDef>Nom</th>
+        <td mat-cell *matCellDef="let element"> {{element.Nom}} </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="mat-column-right">Actions</th>
+        <td mat-cell *matCellDef="let element" class="mat-column-right">
+          <button mat-button color="primary" (click)="editIssue(element.id)">Modifier</button>
+          <button mat-button color="warn" (click)="deleteIssue(element.id)">Supprimer</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+  </mat-card>
+</div>

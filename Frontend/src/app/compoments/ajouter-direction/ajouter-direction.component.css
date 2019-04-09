@@ -1,0 +1,12 @@
+.create-form {
+    min-width: 150px;
+    max-width: auto;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+    width: 50%;
+  }
+  .field-full-width{
+      width: 450px;
+      margin-right: 10px;
+  }

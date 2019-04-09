@@ -1,0 +1,41 @@
+<div>
+  <br>
+  <mat-card>
+    <br>
+    <form [formGroup]="createForm" class="create-form">
+        <section class="mat-typography">
+            <h1>Ajout d'une nouvelle direction</h1>
+          </section>
+      <mat-form-field class="field-full-width">
+        <input matInput placeholder="Numero de la Direction" type="number" formControlName="NumDG" #NumDG>
+      </mat-form-field>
+  
+      <mat-form-field class="field-full-width">
+          <input matInput placeholder="Nom de la Direction" type="text" formControlName="Nom" #Nom>
+        </mat-form-field>
+        <br><br>
+        <button type="submit" (click)="ajouterDirection(NumDG.value, Nom.value)" class="field-full-width" [disabled]="createForm.pristine || createForm.invalid" mat-raised-button color="primary">Ajouter</button>
+      <button mat-raised-button color="accent" class="field-full-width" routerLink="/directions">Retour a la Liste</button>
+      
+    </form>
+
+    <form [formGroup]="serviceForm" class="create-form">
+      <br> <br>
+        <section class="mat-typography">
+            <h1>Ajout d'un nouveau service</h1>
+          </section>
+        <mat-form-field class="field-full-width">
+          <input matInput placeholder="Numero du service" type="number" formControlName="NumServ" #NumServ>
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+            <input matInput placeholder="Nom de la Direction" type="text" formControlName="NomDG" #NomDG>
+          </mat-form-field>
+        <mat-form-field class="field-full-width">
+            <input matInput placeholder="Nom du service" type="text" formControlName="Nom" #Nom1>
+          </mat-form-field>
+          <button type="submit" class="field-full-width" (click)="ajouterService(NumServ.value,NomDG.value,Nom1.value); NumServ.value='';NomDG.value='';Nom1.value=''" [disabled]="serviceForm.pristine || serviceForm.invalid" mat-raised-button color="primary" >Ajouter</button>&nbsp;
+        
+      </form>
+
+  </mat-card>
+</div>

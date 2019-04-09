@@ -1,0 +1,39 @@
+.affiche{
+    font-size: 90%;
+    font-family: 'Courier New', Courier, monospace;
+    width: 100%;
+    margin-top: 3%;
+}
+.titre{
+    color:  #ff4081;
+    text-align: center;
+}
+.contenue{
+    margin-bottom: 2%;
+    margin-top: 2%;
+    margin-left: 5%;
+    text-align: left;
+    font-size: 170%;
+    margin-left: 5%;
+    margin: auto;
+    width: 800px;
+    height: 200px;
+}
+
+.rec{
+    border-style: solid;
+    border-color: #ff4081;
+    margin: auto;
+    text-align: center;
+    }
+
+.rec-det{
+    border-style: solid;
+    border-color: rgba(24, 56, 170, 0.781);
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}

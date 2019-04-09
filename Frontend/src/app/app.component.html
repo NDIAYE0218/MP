@@ -1,0 +1,36 @@
+<mat-toolbar>
+  <img src="../assets/img/AMP.PNG" class="img">
+  <span class="titre">AMP: Alerte des Marchés Publics</span>
+  <img src="../assets/img/images.png" class="img">
+</mat-toolbar>
+<mat-toolbar class="men">
+  <div class="men-items">
+    <button mat-raised-button [matMenuTriggerFor]="marche" color="accent" class="men-item"><mat-icon>shopping_cart</mat-icon>Marchés</button>
+    <button mat-raised-button [matMenuTriggerFor]="stats" color="accent" class="men-item"><mat-icon>bar_chart</mat-icon>Statistiques</button>
+    <button mat-raised-button color="accent" class="men-item"> <mat-icon>notification_important</mat-icon>Détails des notifications</button>
+    <button mat-raised-button color="accent" class="men-item" routerLink="/direction/ajouter"><mat-icon>library_add</mat-icon>Ajout Directions et services</button>
+    <button mat-raised-button color="accent" class="men-item"><mat-icon>help</mat-icon>Aide et Manuel d'utilisation</button>
+    <mat-menu #marche="matMenu">
+      <button mat-menu-item routerLink="/marches"><mat-icon>view_list</mat-icon>Voir tous les Marchés</button>
+      <button mat-menu-item [matMenuTriggerFor]="AjoutMarche" ><mat-icon>add_shopping_cart</mat-icon>Ajouter Marchés</button>
+    </mat-menu>
+    <mat-menu #stats="matMenu">
+      <button mat-menu-item [matMenuTriggerFor]="finances"> <mat-icon>euro_symbol</mat-icon>Statistiques financiers</button>
+      <button mat-menu-item ><mat-icon>bubble_chart</mat-icon>Statistiques Procedures</button>
+    </mat-menu>
+    <mat-menu #AjoutMarche="matMenu">
+      <button mat-menu-item routerLink="/marche/ajouter"><mat-icon>edit</mat-icon>Depuis un formulaire</button>
+      <button mat-menu-item routerLink="marche/ajouter/csv"><mat-icon>cloud_upload</mat-icon>importer un fichier CSV</button>
+    </mat-menu>
+
+    <mat-menu #finances="matMenu">
+        <button mat-menu-item><mat-icon>pie_chart</mat-icon>En fonction des Directions</button>
+        <button mat-menu-item><mat-icon>show_chart</mat-icon>En fonction des services</button>
+        <button mat-menu-item><mat-icon>table_chart</mat-icon>Montant total par année</button>
+    </mat-menu>
+
+  </div>
+</mat-toolbar>
+<div>
+  <router-outlet></router-outlet>
+</div>

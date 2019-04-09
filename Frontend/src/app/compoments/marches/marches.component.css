@@ -1,0 +1,48 @@
+.corps{
+    min-width: 150px;
+    max-width: auto;
+    width: 100%;
+    margin: auto;
+    width: 90%;
+  }
+  .tgd{
+    border: 1px solid black;
+  }
+  .tgd-cell{
+    border: 0.5px solid rgb(24, 56, 170);
+  }
+  table {
+    width: 100%;
+}
+th{
+  font-size: 18px;
+  color: rgb(24, 56, 170);
+}
+
+.mat-column-right {
+    text-align: center;
+}
+.hedtab{
+  width: 100%;
+}
+
+/deep/.mat-tab-label{
+  width: 50%;
+  color: #ff4081;
+}
+.field-full-width{
+  width: 44%;
+}
+.recherche{
+  width: 100%;
+  margin-left: auto;
+}
+.ou{
+  border-radius: 80%;
+  width: 5%;
+  font-size: 180%;
+  margin-left: 1%;
+  margin-right: 1%; 
+  background-color: #ff4081;
+  color: rgb(24, 56, 170);
+}

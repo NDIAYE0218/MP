@@ -1,0 +1,73 @@
+<ngfFormData [files]="files" postName="file" [(FormData)]="sendableFormData"></ngfFormData>
+<ngfUploadStatus [(percent)]="progress" [httpEvent]="httpEvent"></ngfUploadStatus>
+<div class="inline-block">
+<div>
+    <div class="inline-block">
+      <div ngfDrop [(validDrag)]="baseDropValid" (fileOver)="hasBaseDropZoneOver=$event" selectable="1" 
+        [(files)]="files" accept=".xlsx" [maxSize]="maxSize" [(dragFiles)]="dragFiles"
+        [(lastInvalids)]="lastInvalids" class="well my-drop-zone" [class.invalid-drag]="baseDropValid===false"
+        [class.valid-drag]="baseDropValid" (filesChange)="lastFileAt=getDate()"><br>
+        Selectionner ou glisser le fichier ici
+      </div>
+    </div>
+
+    <div>
+    <div class="avnt_up" *ngIf="files.length==0">
+            <p>
+              Seule les fichiers au format <b>excel (xlsx)</b> sont accepté,
+              il doivent respecter le format suivant<br><br>
+              <img src="../../../assets/img/aide_up.PNG" class="img"><br>
+              Telecharger le format <a href="../../../assets/format.csv">ici</a><br><br>
+            </p>
+    </div>
+    <div class="aprs_up" *ngIf="files.length>0">
+      <h3 style="text-align: center">{{ files.length }} Fichier(s) en attente</h3><br>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Taille</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of files;let i=index">
+            <td>
+              <strong>{{ item.name }}</strong>
+            </td>
+
+            <td nowrap>
+              {{ item.type }}
+            </td>
+
+            <td nowrap>
+              {{ item.size/1024/1024 | number:'.2' }} MB
+            </td>
+
+            <td nowrap>
+              <button mat-raised-button color="accent" type="button" (click)="files.splice(i,1)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div>
+        <div>
+          <br>
+          Etat du chargement:
+          <mat-progress-bar class="prog" mode="determinate" value="{{progress}}"></mat-progress-bar>
+        </div>
+        <mat-icon *ngIf="progress==100">done</mat-icon>
+
+        <button type="button" mat-raised-button color="primary" (click)="uploadFiles(files)" [disabled]="!files.length">
+            <mat-icon>add_shopping_cart</mat-icon> Ajouter
+        </button> 	&nbsp; 	&nbsp;
+        <button type="button" mat-raised-button color="accent" (click)="files.length=0" [disabled]="!files.length">
+            <mat-icon>delete_sweep</mat-icon> Tous supprimer
+        </button>
+      </div>
+    </div>
+    
+    </div>

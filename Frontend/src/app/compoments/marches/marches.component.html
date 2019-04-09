@@ -1,0 +1,297 @@
+<div class="corps">
+  <h1>Liste des Marchés</h1>
+  <div class="recherche">
+    <br>
+    <form [formGroup]="createForm" class="create-form">
+      <mat-form-field class="field-full-width">
+        <input matInput placeholder="Trier par date" [matDatepicker]="picker" formControlName="Annee_rech" #Annee_rech>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker startView="year"></mat-datepicker>
+      </mat-form-field><span class="ou"> OU </span>
+      <mat-form-field class="field-full-width">
+        <input matInput placeholder="Recherche par N° du marché" type="text" formControlName="ID_rech" #ID_rech>
+      </mat-form-field>
+      <button type="submit" [disabled]="createForm.pristine || createForm.invalid"
+        (click)="rechercher(Annee_rech.value,ID_rech.value);Annee_rech.value='';ID_rech.value=''" mat-raised-button
+        color="primary">
+        <mat-icon>search</mat-icon>
+      </button>
+    </form>
+  </div>
+  <mat-tab-group animationDuration="1000ms" class="hedtab">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>info</mat-icon>
+        <h2>&nbsp;Informations générales</h2>
+      </ng-template>
+      <br><br>
+      <!--Information general debut-->
+      <table mat-table [dataSource]="marches">
+        <ng-container matColumnDef="NumMarche">
+          <th mat-header-cell *matHeaderCellDef>N° du marché</th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.NumMarche.toString().length===1">{{element.An}}-00{{element.NumMarche}}</span>
+            <span *ngIf="element.NumMarche.toString().length===2">{{element.An}}-0{{element.NumMarche}}</span>
+            <span *ngIf="element.NumMarche.toString().length===3">{{element.An}}-{{element.NumMarche}}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="objet">
+          <th mat-header-cell *matHeaderCellDef>Objet</th>
+          <td mat-cell *matCellDef="let element"> {{element.objet}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nature">
+          <th mat-header-cell *matHeaderCellDef>Nature</th>
+          <td mat-cell *matCellDef="let element"> {{element.Nature}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="procedure">
+          <th mat-header-cell *matHeaderCellDef>Type de procédure</th>
+          <td mat-cell *matCellDef="let element">{{element.Type_process}}</td>
+        </ng-container>
+        <ng-container matColumnDef="typeMarche">
+          <th mat-header-cell *matHeaderCellDef>Forme et type du marché</th>
+          <td mat-cell *matCellDef="let element"><b>{{element.Format_process}}</b> / {{element.Type_Marche}}</td>
+        </ng-container>
+        <ng-container matColumnDef="act">
+          <th mat-header-cell *matHeaderCellDef class="mat-column-right">Actions</th>
+          <td mat-cell *matCellDef="let element" class="mat-column-right">
+            <button mat-button color="primary"
+              routerLink="/marches/{{element.An}}-{{element.NumMarche}}">Afficher</button>
+            <button mat-button color="warn" (click)="suppmarche(element.An,element.NumMarche)">Supprimer</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="ColumnsInformation"></tr>
+        <tr mat-row *matRowDef="let row; columns: ColumnsInformation;"></tr>
+      </table>
+      <!--Information general fin-->
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>all_out</mat-icon>
+        <h2>&nbsp;Directions</h2>
+      </ng-template>
+      <br><br>
+      <table mat-table [dataSource]="marches">
+        <ng-container matColumnDef="NumMarche">
+          <th mat-header-cell *matHeaderCellDef>N° du marché</th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.NumMarche.toString().length===1">{{element.An}}-00{{element.NumMarche}}</span>
+            <span *ngIf="element.NumMarche.toString().length===2">{{element.An}}-0{{element.NumMarche}}</span>
+            <span *ngIf="element.NumMarche.toString().length===3">{{element.An}}-{{element.NumMarche}}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="objet">
+          <th mat-header-cell *matHeaderCellDef>Objet</th>
+          <td mat-cell *matCellDef="let element"> {{element.objet}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="DG">
+          <th mat-header-cell *matHeaderCellDef>Direction</th>
+          <td mat-cell *matCellDef="let element"> {{element.DG}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="serv">
+          <th mat-header-cell *matHeaderCellDef>Services</th>
+          <td mat-cell *matCellDef="let element"> {{element.serv}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="Contacte">
+          <th mat-header-cell *matHeaderCellDef>Contact</th>
+          <td mat-cell *matCellDef="let element"> {{element.Contacte}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="act">
+          <th mat-header-cell *matHeaderCellDef class="mat-column-right">Actions</th>
+          <td mat-cell *matCellDef="let element" class="mat-column-right">
+            <button mat-button color="primary"
+              routerLink="/marches/{{element.An}}-{{element.NumMarche}}">Afficher</button>
+            <button mat-button color="warn" (click)="suppmarche(element.An,element.NumMarche)">Supprimer</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="ColumnsDirection"></tr>
+        <tr mat-row *matRowDef="let row; columns: ColumnsDirection;"></tr>
+
+      </table>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>euro_symbol</mat-icon>
+        <h2>&nbsp;Montants</h2>
+      </ng-template>
+      <br><br>
+      <table mat-table [dataSource]="marches">
+        <ng-container matColumnDef="NumMarche">
+          <th mat-header-cell *matHeaderCellDef>N° du marché</th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.NumMarche.toString().length===1">{{element.An}}-00{{element.NumMarche}}</span>
+            <span *ngIf="element.NumMarche.toString().length===2">{{element.An}}-0{{element.NumMarche}}</span>
+            <span *ngIf="element.NumMarche.toString().length===3">{{element.An}}-{{element.NumMarche}}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="objet">
+          <th mat-header-cell *matHeaderCellDef>Objet</th>
+          <td mat-cell *matCellDef="let element"> {{element.objet}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="typeMarche">
+          <th mat-header-cell *matHeaderCellDef>Forme et type du marché</th>
+          <td mat-cell *matCellDef="let element"><b>{{element.Format_process}}</b> / {{element.Type_Marche}}</td>
+        </ng-container>
+        <ng-container matColumnDef="montantmin">
+          <th mat-header-cell *matHeaderCellDef>Montant min</th>
+          <td mat-cell *matCellDef="let element">{{element.Montant_Min}}</td>
+        </ng-container>
+        <ng-container matColumnDef="montantdeb">
+          <th mat-header-cell *matHeaderCellDef>Montant déboursé</th>
+          <td mat-cell *matCellDef="let element"><b>{{element.MontantConsome}}</b></td>
+        </ng-container>
+        <ng-container matColumnDef="montantmax">
+          <th mat-header-cell *matHeaderCellDef>Montant max</th>
+          <td mat-cell *matCellDef="let element">{{element.Montant_Max}}</td>
+        </ng-container>
+        <ng-container matColumnDef="act">
+          <th mat-header-cell *matHeaderCellDef class="mat-column-right">Actions</th>
+          <td mat-cell *matCellDef="let element" class="mat-column-right">
+            <button mat-button color="primary"
+              routerLink="/marches/{{element.An}}-{{element.NumMarche}}">Afficher</button>
+            <button mat-button color="warn" (click)="suppmarche(element.An,element.NumMarche)">Supprimer</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="ColumnsMontant"></tr>
+        <tr mat-row *matRowDef="let row; columns: ColumnsMontant;"></tr>
+      </table>
+      <!--Information general fin-->
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>subtitles</mat-icon>
+        <h2>&nbsp;Titulaire et sous traitant</h2>
+      </ng-template>
+      <table mat-table [dataSource]="marches">
+        <ng-container matColumnDef="NumMarche">
+          <th mat-header-cell *matHeaderCellDef>N° du marché</th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.NumMarche.toString().length===1">{{element.An}}-00{{element.NumMarche}}</span>
+            <span *ngIf="element.NumMarche.toString().length===2">{{element.An}}-0{{element.NumMarche}}</span>
+            <span *ngIf="element.NumMarche.toString().length===3">{{element.An}}-{{element.NumMarche}}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="objet">
+          <th mat-header-cell *matHeaderCellDef>Objet</th>
+          <td mat-cell *matCellDef="let element"> {{element.objet}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Type">
+          <th mat-header-cell *matHeaderCellDef>Type traitants</th>
+          <td mat-cell *matCellDef="let element" class="tgd">
+            <tr>Titulaire</tr><br>
+            <tr class="tgd" *ngFor="let sous_trait of element.SousTraitants;">Sous traitant</tr>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Nom">
+          <th mat-header-cell *matHeaderCellDef>Nom entreprise</th>
+          <td mat-cell *matCellDef="let element" class="tgd">
+            <tr>{{element.Titulaire.Nom}}</tr><br>
+            <tr class="tgd" *ngFor="let sous_trait of element.SousTraitants;">{{sous_trait.Nom}}</tr>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Nom_Contacte">
+          <th mat-header-cell *matHeaderCellDef>Nom contact</th>
+          <td mat-cell *matCellDef="let element" class="tgd">
+              <tr>{{element.Titulaire.Contacte}}</tr><br>
+              <tr class="tgd" *ngFor="let sous_trait of element.SousTraitants;">{{sous_trait.Contacte}}</tr>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Mail_Contacte">
+          <th mat-header-cell *matHeaderCellDef>Email contacte</th>
+          <td mat-cell *matCellDef="let element" class="tgd">
+              <tr>{{element.Titulaire.Mail}}</tr><br>
+              <tr class="tgd" *ngFor="let sous_trait of element.SousTraitants;">{{sous_trait.Mail}}</tr>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Adresse">
+          <th mat-header-cell *matHeaderCellDef>Adresse</th>
+          <td mat-cell *matCellDef="let element" class="tgd">
+              <tr>{{element.Titulaire.Adresse_1}} - {{element.Titulaire.Adresse_2}} - {{element.Titulaire.Ville}}({{element.Titulaire.CP}})</tr><br>
+              <tr class="tgd" *ngFor="let sous_trait of element.SousTraitants;">{{sous_trait.Adresse_1}} - {{sous_trait.Adresse_2}} - {{sous_trait.Ville}}({{sous_trait.CP}})</tr>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="act">
+          <th mat-header-cell *matHeaderCellDef class="mat-column-right">Actions</th>
+          <td mat-cell *matCellDef="let element" class="mat-column-right">
+            <button mat-button color="primary"
+              routerLink="/marches/{{element.An}}-{{element.NumMarche}}">Afficher</button>
+            <button mat-button color="warn" (click)="suppmarche(element.An,element.NumMarche)">Supprimer</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="ColumsTitulaire"></tr>
+        <tr mat-row *matRowDef="let row; columns: ColumsTitulaire;"></tr>
+      </table>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>calendar_today</mat-icon>
+        <h2>&nbsp;Dates</h2>
+      </ng-template>
+      <table mat-table [dataSource]="marches">
+        <ng-container matColumnDef="NumMarche">
+          <th mat-header-cell *matHeaderCellDef>N° du marché</th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.NumMarche.toString().length===1">{{element.An}}-00{{element.NumMarche}}</span>
+            <span *ngIf="element.NumMarche.toString().length===2">{{element.An}}-0{{element.NumMarche}}</span>
+            <span *ngIf="element.NumMarche.toString().length===3">{{element.An}}-{{element.NumMarche}}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="objet">
+          <th mat-header-cell *matHeaderCellDef>Objet</th>
+          <td mat-cell *matCellDef="let element"> {{element.objet}} </td>
+        </ng-container>
+        <ng-container matColumnDef="dte_not">
+          <th mat-header-cell *matHeaderCellDef>Date de notification</th>
+          <td mat-cell *matCellDef="let element">{{element.DateNotific}}</td>
+        </ng-container>
+        <ng-container matColumnDef="dte_clo">
+          <th mat-header-cell *matHeaderCellDef>Date de cloture</th>
+          <td mat-cell *matCellDef="let element"><b>{{element.D_clot}}</b></td>
+        </ng-container>
+        <ng-container matColumnDef="duree">
+          <th mat-header-cell *matHeaderCellDef>Durée initiale</th>
+          <td mat-cell *matCellDef="let element">{{element.D_init}}</td>
+        </ng-container>
+        <ng-container matColumnDef="tot_recond">
+          <th mat-header-cell *matHeaderCellDef>Nbre de reconduction</th>
+          <td mat-cell *matCellDef="let element"><b>{{element.Nbr_reconduction}}</b></td>
+        </ng-container>
+        <ng-container matColumnDef="duree_total">
+          <th mat-header-cell *matHeaderCellDef>Durée totale</th>
+          <td mat-cell *matCellDef="let element">{{element.D_tot}}</td>
+        </ng-container>
+        <ng-container matColumnDef="act">
+          <th mat-header-cell *matHeaderCellDef class="mat-column-right">Actions</th>
+          <td mat-cell *matCellDef="let element" class="mat-column-right">
+            <button mat-button color="primary"
+              routerLink="/marches/{{element.An}}-{{element.NumMarche}}">Afficher</button>
+            <button mat-button color="warn" (click)="suppmarche(element.An,element.NumMarche)">Supprimer</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="ColumnsDates"></tr>
+        <tr mat-row *matRowDef="let row; columns: ColumnsDates;"></tr>
+      </table>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>insert_link</mat-icon>
+        <h2>&nbsp;Fichiers associés</h2>
+      </ng-template>
+      
+    </mat-tab>
+  </mat-tab-group>
+</div>
