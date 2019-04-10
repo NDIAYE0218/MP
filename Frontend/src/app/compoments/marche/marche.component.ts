@@ -14,6 +14,7 @@ export class MarcheComponent implements OnInit {
   display:boolean=false
   reconduction: boolean=false
   disp_annee: boolean=false
+  histo=true
   constructor(private marcheservice: MarcheService, private router: Router,private params:ActivatedRoute) { }
 
   ngOnInit() {
@@ -42,6 +43,9 @@ export class MarcheComponent implements OnInit {
       else
       swal('Introuvable','Aucun marché ne correspond a ce numero','warning').then(()=>{this.router.navigate(['/marches'])})
       })  
+  }
+  histo_vue(){
+    this.histo=!this.histo;
   }
 
 }

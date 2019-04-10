@@ -29,6 +29,12 @@ deleteMarches(num,an){
   //var ident=an+'-'+num
   return this.http.delete(`${this.uri}/Marches/`+an+`/`+num)
 }
+updateMarches(historique,id){
+  return this.http.put(`${this.uri}/Marche/`+id, historique).subscribe(
+   data => console.log('success', data),
+   error => console.log('oops', error)
+ );
+}
 generateur_date(dte,nb_mois,nbr_rec){//dte représente la date du debut du marchéet nb_mois le nombre de mois (duré initiale du marché), et le nombre de reconduction pour estimer la valeur d'une periode
   var format=dte.split('/');
   dte=format[1]+"/"+format[0]+"/"+format[2]

@@ -16,8 +16,8 @@
         <th>Nature</th>
       </tr>
       <tr>
-        <td>Alfreds Futterkiste</td>
-        <td>Maria Anders</td>
+        <td>{{marche.objet}}</td>
+        <td>{{marche.Nature}}</td>
       </tr>
     </table>
     <br>
@@ -28,8 +28,8 @@
         <th>Forme et type de marché</th>
       </tr>
       <tr>
-        <td>Alfreds Futterkiste</td>
-        <td>Maria Anders</td>
+        <td>{{marche.Type_process}}</td>
+        <td>{{marche.Format_process}}/{{marche.Type_Marche}}</td>
       </tr>
     </table>
     <br>
@@ -41,74 +41,103 @@
         <th>Contacte</th>
       </tr>
       <tr>
-        <td>Alfreds Futterkiste</td>
-        <td>Maria Anders</td>
-        <td>Maria Anders</td>
+        <td>{{marche.DG}}</td>
+        <td>{{marche.serv}}</td>
+        <td>{{marche.Contacte}}</td>
       </tr>
     </table>
     <br>
     <h2>Montants</h2>
     <table>
-        <tr>
-          <th>Montant minimum</th>
-          <th>Montant déboursé</th>
-          <th>Montant maximum</th>
-        </tr>
-        <tr>
-          <td>Alfreds Futterkiste</td>
-          <td><b>Maria Anders</b></td>
-          <td>Maria Anders</td>
-        </tr>
+      <tr>
+        <th>Montant minimum</th>
+        <th>Montant déboursé</th>
+        <th>Montant maximum</th>
+      </tr>
+      <tr>
+        <td>{{marche.Montant_Min}}</td>
+        <td><b>{{marche.Montant_Max}}</b></td>
+        <td>{{marche.MontantConsome}}</td>
+      </tr>
     </table>
     <h2>Titulaire et sous traitants</h2>
     <table>
-        <tr >
-          <th class="tra">Type</th>
-          <th class="tra">entreprise</th>
-          <th class="tra">contact</th>
-          <th class="tra">Email</th>
-          <th class="tra">Adresse</th>
-        </tr>
-        <tr >
-          <td>Alfreds Futterkiste</td>
-          <td>Maria Anders</td>
-          <td>Maria Anders</td>
-          <td>Maria Anders</td>
-          <td>Maria Anders</td>
-        </tr>
+      <tr>
+        <th class="tra">Type</th>
+        <th class="tra">entreprise</th>
+        <th class="tra">contact</th>
+        <th class="tra">Email</th>
+        <th class="tra">Adresse</th>
+      </tr>
+      <tr>
+        <td>Titulaire</td>
+        <td>{{marche.Titulaire.Nom}}</td>
+        <td>{{marche.Titulaire.Contacte}}</td>
+        <td>{{marche.Titulaire.Mail}}</td>
+        <td>{{marche.Titulaire.Adresse_1}} {{marche.Titulaire.Adresse_2}}
+          {{marche.Titulaire.Ville}}({{marche.Titulaire.CP}})</td>
+      </tr>
+      <tr *ngFor="let trai of marche.SousTraitants;">
+        <td>Sous traitant</td>
+        <td>{{trai.Nom}}</td>
+        <td>{{trai.Contacte}}</td>
+        <td>{{trai.Mail}}</td>
+        <td>{{trai.Adresse_1}} {{trai.Adresse_2}} {{trai.Ville}}({{trai.CP}})</td>
+      </tr>
     </table>
     <br>
     <h2>Dates</h2>
     <table>
-        <tr >
-          <th class="tra">Date de notification</th>
-          <th class="tra">Date de cloture</th>
-          <th class="tra">Nombre de redirections</th>
-          <th class="tra">Durée initiale</th>
-          <th class="tra">Durée totale</th>
-        </tr>
-        <tr >
-          <td>Alfreds Futterkiste</td>
-          <td>Maria Anders</td>
-          <td>Maria Anders</td>
-          <td>Maria Anders</td>
-          <td>Maria Anders</td>
-        </tr>
+      <tr>
+        <th class="tra">Date de notification</th>
+        <th class="tra">Date de cloture</th>
+        <th class="tra">Nombre de redirections</th>
+        <th class="tra">Durée initiale</th>
+        <th class="tra">Durée totale</th>
+      </tr>
+      <tr>
+        <td>{{marche.DateNotific}}</td>
+        <td>{{marche.D_clot}}</td>
+        <td>{{marche.Nbr_reconduction}}</td>
+        <td>{{marche.D_init}}</td>
+        <td>{{marche.D_tot}}</td>
+      </tr>
     </table>
     <br>
     <h2>Fichier associés</h2>
     <table>
+      <tr>
+        <th>Nom</th>
+        <th>Action</th>
+      </tr>
+      <tr *ngFor="let pj of marche.Piece_Jointe;">
+        <td>{{pj.nom.substring(25)}}</td>
+        <td><a href="http://localhost:4000/file_marche/{{pj.nom}}" target="_blank">
+            <mat-icon>vertical_align_bottom</mat-icon>
+          </a></td>
+      </tr>
+    </table>
+    <br>
+    <button mat-button color="primary"  *ngIf="marche.historique.length>0" (click)="histo_vue()">Voir l'historique des modifications</button>
+    <div [hidden]="histo">
+      <table>
         <tr>
-          <th>Nom</th>
-          <th>Action</th>
+          <th>Numero modification</th>
+          <th>Date</th>
+          <th>Montant</th>
+          <th>Prestation</th>
         </tr>
-        <tr>
-          <td>Alfreds Futterkiste</td>
-          <td>Maria Anders</td>
+        <tr *ngFor="let his of marche.historique;">
+          <td>{{his.numModif}}</td>
+          <td>{{his.date}}</td>
+          <td>{{his.Montant}}</td>
+          <td>{{his.Prestation}}</td>
         </tr>
       </table>
+    </div>
+
   </mat-card>
- 
+
   <div class="titre">
   </div>
   <br>

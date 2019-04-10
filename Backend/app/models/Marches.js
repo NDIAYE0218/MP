@@ -64,6 +64,7 @@ var MarchesSchema = mongoose.Schema({
                 Montant: Number,
                 Prestation: String,
                 Autre: String,
+                date: String
             }
         ],
     Annee://details annuels

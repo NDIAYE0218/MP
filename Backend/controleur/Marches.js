@@ -104,7 +104,14 @@ module.exports = {
 
     },
     modifierMarcher: function (req, res) {
-
+        var _id=req.params.id
+        var marche=req.body
+        Marches.updateOne({_id:_id},marche, function(err){
+            if(err)
+            console.log('eurreur')
+            else
+            console.log("okkk")
+        })
     },
     supprimerMarcher: function (req, res) {
         Marches.deleteOne({ An: req.params.an, NumMarche: req.params.num }, function (err) {

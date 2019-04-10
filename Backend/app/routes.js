@@ -19,7 +19,7 @@ module.exports = function(app) {
     .get('/Marches',Marches.listeMarchers)
     .get('/Marche/:num/:an',Marches.getMarcher)
     .post('/Marche',Marches.ajouterMarcher)
-    .put('/Marche',Marches.modifierMarcher)
+    .put('/Marche/:id',Marches.modifierMarcher)
     .delete('/Marches/:num/:an',Marches.supprimerMarcher)
     .get('/Marches/:an',Marches.rechercherMarcher)
     .post('/Marches',Marches.relancerMarcher)
