@@ -30,6 +30,16 @@ export class MarchesComponent implements OnInit {
     this.fetchdata();
   }
   fetchdata() {
+    let timerInterval
+swal({
+  title: 'Recherche des données',
+  html: 'Veuillez patienter',
+  timer: 2000,
+  onBeforeOpen: () => {
+    swal.showLoading()
+    timerInterval = setInterval(() => {}, 100)
+  },onClose: () => {clearInterval(timerInterval)}
+})
     this.marcheservice.getMarches().subscribe((data: Marches[]) => {
       this.marches = data;
     })
@@ -74,7 +84,7 @@ export class MarchesComponent implements OnInit {
     var html = '<div style="display: inline-block;width: 200px;"><label>Montant: </label><input type="number"  required id="montant"><br></div>' +
       '<div style="display: inline-block;width: 200px;"><label>Prestation:</label><input type="text" required id="prestation"><br></div>'
     swal({
-      title: "Modifier le marché",
+      title: "Rajout d'une nouvelle prestation",
       html: html,
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -102,11 +112,19 @@ export class MarchesComponent implements OnInit {
             date: dd+"/"+mm+"/"+yyyy+" "+time
           })
           marche.historique=historique
+          marche.MontantConsome=marche.MontantConsome+parseInt(montant)
          //modif du webservice
          this.marcheservice.updateMarches(marche,marche._id)
          this.fetchdata()
         }
       }
     })
+  }
+  historique(element){
+    var html="<table><tr><th>Numero modification</th><th>Date</th><th>Montant</th><th>Prestation</th></tr>"
+    for(var i=element.length-1;i>=0;i--)
+    html+="<tr><td>"+element[i].numModif+"</td><td>"+element[i].date+"</td><td>"+element[i].Montant+"</td><td>"+element[i].Prestation+"</td></tr>"
+    html+="</table>"
+    swal({title:"Historique de modification",html:html,type:"info"})
   }
 }

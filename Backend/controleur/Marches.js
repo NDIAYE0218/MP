@@ -34,35 +34,34 @@ module.exports = {
         var dt = new Date()
         var date = dt.getDate() + "" + dt.getFullYear() + "" + dt.getMilliseconds() + "" + dt.getMonth() + "" + dt.getMinutes() + dt.getTime()
         if (typeof req.files.file.name != 'undefined') {
-            var nom_fichier = Dossier_up+date+"_"+ req.files.file.name
+            var nom_fichier = Dossier_up + date + "_" + req.files.file.name
             //enregistrement provisoire du fichier
             req.files.file.mv(nom_fichier, function (err) {
-              if (err) {
-                throw err
-              }
-              res.json([{numero:0,nom:date+"_"+ req.files.file.name}])
-            })
-          }
-          //boucle sur plusieur fichiers quand name n'existe pas
-          else {
-            var ret=[]
-            for (var i = 0; i < nbr_fichier; i++) {
-              var nom_fichier = Dossier_up +date+"_"+ req.files.file[i].name
-              var nom=date+"_"+ req.files.file[i].name
-              //enregistrement provisoire du fichier
-              req.files.file[i].mv(nom_fichier, function (err) {
                 if (err) {
-                  throw err
+                    throw err
                 }
-              })
-              ret.push({numero:i,nom:nom})
-              if(i==nbr_fichier-1)
-              res.json(ret)
+                res.json([{ numero: 0, nom: date + "_" + req.files.file.name }])
+            })
+        }
+        //boucle sur plusieur fichiers quand name n'existe pas
+        else {
+            var ret = []
+            for (var i = 0; i < nbr_fichier; i++) {
+                var nom_fichier = Dossier_up + date + "_" + req.files.file[i].name
+                var nom = date + "_" + req.files.file[i].name
+                //enregistrement provisoire du fichier
+                req.files.file[i].mv(nom_fichier, function (err) {
+                    if (err) {
+                        throw err
+                    }
+                })
+                ret.push({ numero: i, nom: nom })
+                if (i == nbr_fichier - 1)
+                    res.json(ret)
             }
-          }
-    }
-    ,
-    downoald_file: function(req,res){
+        }
+    },
+    downoald_file: function (req, res) {
         var __dirname = "./fichier_marche/"
         res.sendFile(req.params.nomfichier, { root: __dirname });
     },
@@ -104,13 +103,13 @@ module.exports = {
 
     },
     modifierMarcher: function (req, res) {
-        var _id=req.params.id
-        var marche=req.body
-        Marches.updateOne({_id:_id},marche, function(err){
-            if(err)
-            console.log('eurreur')
+        var _id = req.params.id
+        var marche = req.body
+        Marches.updateOne({ _id: _id }, marche, function (err) {
+            if (err)
+                console.log('eurreur')
             else
-            console.log("okkk")
+                res.send("ok")
         })
     },
     supprimerMarcher: function (req, res) {
@@ -140,10 +139,8 @@ function traiteur_upload(result) {
      */
     //parcour des datasheet
     for (var i = 0; i < Object.keys(result).length; i++) {
-
         var data = result[Object.keys(result)[i]] //selection du datasheet
         //on ne considère pas les 4 premieres lignes de chaque datasheet qui sont utilisé pour les intitulé
-
         //parcourt des ligne du tableau
         for (var j = 4; j < Object.keys(data).length; j++) {
             marche = new Marches();
@@ -151,34 +148,41 @@ function traiteur_upload(result) {
                 marche.objet = data[j].D
                 marche.An = data[j].C.substring(0, 2)
                 marche.NumMarche = data[j].C.substring(data[j].C.length - 3, data[j].C.length)
-                marche.Contacte = data[j].E
-                marche.DG = data[j].A
-                marche.serv = data[j].B
-                marche.MontantTotal = (typeof data[j].F == 'undefined' || typeof data[j].F == 'string') ? 0 : data[j].F
-                marche.Observation = (typeof data[j].AG == 'undefined') ? '' : data[j].AG
-                marche.Date_Cloture = formatedate(data[j].AC)
+                marche.Total_relance = 0
                 marche.DateNotific = CreerDateNotification(formatedate(data[j].AC), data[j].M)
+                marche.Nature = ""
                 //gestion type Process et format process
                 if (typeof data[j].G != 'undefined') { marche.Type_process = "MAPA"; marche.Format_process = "RECONDUCTIBLE"; }
                 if (typeof data[j].H != 'undefined') { marche.Type_process = "MAPA"; marche.Format_process = "FERME" }
                 if (typeof data[j].I != 'undefined') { marche.Type_process = "AO"; marche.Format_process = "RECONDUCTIBLE" }
                 if (typeof data[j].J != 'undefined') { marche.Type_process = "AO"; marche.Format_process = "FERME" }
                 if (typeof data[j].K != 'undefined') { marche.Type_process = "CONCESSION"; marche.Format_process = "FERME" }
-                //creation des tableau
-                //tableau de duree
-                var duree = [{ D_init: data[j].M, D_tot: data[j].O, nb_rec: data[j].N, D_clot: formatedate(data[j].P) }]
-                marche.Duree = duree
-                //tableau des année (3ans) ce faits en fonction du format_process et du type process
-                var annee = [], relance = []
-                if (typeof data[j].G != 'undefined') //reconduction MAPA
-                    annee = [{ DRecond: formatedate(data[j].Q), DteSS: data[j].S, CourRec: data[j].T }, { DRecond: formatedate(data[j].U), DteSS: data[j].W, CourRec: data[j].X }, { DRecond: formatedate(data[j].Y), DteSS: data[j].AA, CourRec: data[j].BB }]
-                if (typeof data[j].I != 'undefined') //reconductible AO
-                    annee = [{ DRecond: formatedate(data[j].R), DteSS: data[j].S, CourRec: data[j].T }, { DRecond: formatedate(data[j].V), DteSS: data[j].W, CourRec: data[j].X }, { DRecond: formatedate(data[j].Z), DteSS: data[j].AA, CourRec: data[j].BB }]
-                relance = (typeof data[j].AD != 'undefined' && data[j].AD != '') ? [{ type: "MAPA", date: formatedate(data[j].AD), dure: data[j].M }] : (typeof data[j].AE != 'undefined' && data[j].AE != '') ? [{ type: "AO", date: formatedate(data[j].AE), dure: data[j].M }] : (typeof data[j].AF != 'undefined' && data[j].AF != '') ? [{ type: "CONCESSION", date: formatedate(data[j].AF), dure: data[j].M }] : []
-                // ajout a marche
-                marche.Duree = duree
-                marche.Annee = annee
-                marche.Relance = relance
+                marche.Type_Marche = ""
+                marche.Montant_Min = 0
+                marche.Montant_Max = 0
+                marche.MontantConsome = (typeof data[j].F == 'undefined' || typeof data[j].F == 'string') ? 0 : data[j].F
+                marche.Nbr_reconduction = (typeof data[j].N == 'undefined' || typeof data[j].N == 'string') ? 0 : data[j].N
+                marche.Observation = (typeof data[j].AG == 'undefined') ? '' : data[j].AG
+                marche.Date_Cloture_ini = formatedate(data[j].P)
+                marche.D_clot = formatedate(data[j].AC)
+                marche.Contacte = data[j].E
+                marche.DG = data[j].A
+                marche.serv = data[j].B
+                marche.D_init = (typeof data[j].M == 'undefined') ? 0 : data[j].M
+                marche.D_tot = (typeof data[j].O == 'undefined') ? 0 : data[j].O
+                marche.Titulaire = {
+                    Nom: "Non renseigné",
+                    Adresse_1: "",
+                    Adresse_2: "Non renseigné",
+                    CP: "",
+                    Ville: "",
+                    Tel: "",
+                    Contacte: "",
+                    Mail: "",
+                }
+                marche.SousTraitants = []
+                marche.Piece_Jointe = []
+                marche.historique = []
                 marche.save(function
                     (err) {
                     if (err)

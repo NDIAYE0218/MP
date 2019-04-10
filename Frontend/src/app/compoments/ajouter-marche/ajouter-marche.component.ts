@@ -103,9 +103,9 @@ export class AjouterMarcheComponent implements OnInit {
       swal({ type: "warning", title: "Données incorecte", text: "Le Montant deboursé € (TTC) * dois être compris entre le Montant minimum € (TTC) et Montant maximum € (TTC)", timer: 5000, showConfirmButton: false })
     else if (TypeMarche != "Ferme" && Nbr_rec <= 1)
       swal({ type: "warning", title: "Données incorecte", text: "Le type de marché est reconductible alors le nombre de reconduction dois être suppérieur a 1", timer: 5000, showConfirmButton: false })
-    else if (Nbr_rec > DureInitial)
-      swal({ type: "warning", title: "Données incorecte", text: "Le nombre de reconduction dois être au minimum égale a la duré initiale en mois", timer: 5000, showConfirmButton: false })
-    else { //calcule des valeur généré
+    else if (parseInt(Nbr_rec) > parseInt(DureInitial))
+      {swal({ type: "warning", title: "Données incorecte", text: "Le nombre de reconduction dois être au minimum égale a la duré initiale en mois", timer: 5000, showConfirmButton: false })
+}    else { //calcule des valeur généré
       this.contacte = (this.mailcontacte.length > 0) ? "" : Contacte
       for (var i = 0; i < this.mailcontacte.length; i++)
         this.contacte += this.mailcontacte[i] + ","

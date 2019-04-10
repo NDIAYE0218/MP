@@ -56,8 +56,8 @@
       </tr>
       <tr>
         <td>{{marche.Montant_Min}}</td>
-        <td><b>{{marche.Montant_Max}}</b></td>
-        <td>{{marche.MontantConsome}}</td>
+        <td><b>{{marche.MontantConsome}}</b></td>
+        <td>{{marche.Montant_Max}}</td>
       </tr>
     </table>
     <h2>Titulaire et sous traitants</h2>
@@ -104,8 +104,8 @@
       </tr>
     </table>
     <br>
-    <h2>Fichier associés</h2>
-    <table>
+    <h2 *ngIf="marche.Piece_Jointe.length>0">Fichier associés</h2>
+    <table *ngIf="marche.Piece_Jointe.length>0">
       <tr>
         <th>Nom</th>
         <th>Action</th>

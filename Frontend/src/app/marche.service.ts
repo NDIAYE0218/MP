@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import {Marches} from './Models/marche.model'
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +10,6 @@ export class MarcheService {
   CreerMarcher(Marche){  
     console.log(Marche)
    return this.http.post(`${this.uri}/Marche`, Marche).subscribe(
-    data => console.log('success', data),
     error => console.log('oops', error)
   );
   }
@@ -31,7 +29,6 @@ deleteMarches(num,an){
 }
 updateMarches(historique,id){
   return this.http.put(`${this.uri}/Marche/`+id, historique).subscribe(
-   data => console.log('success', data),
    error => console.log('oops', error)
  );
 }
