@@ -23,6 +23,9 @@ var MarchesSchema = mongoose.Schema({
     D_init: Number,//non modifiable
     D_tot: Number,//egal date_ini pour la 1er saisie
     agent_enregist: String,//email de l'agent enregistrant la demande
+    Date_reconduction_courante: String,
+    Tot_rec_effectue:           String,
+    bloque: Number, //permet de bloquer l'actualisation d'une reconduction expresse, si 1 l'on ne peut plus actualiser la decision
     Titulaire://information concernant le titulaire
     {
         Nom: String,

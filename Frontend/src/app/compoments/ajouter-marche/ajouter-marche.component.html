@@ -104,12 +104,12 @@
           <mat-select placeholder="Type de marché *" formControlName="TypeMarche" #TypeMarche>
             <mat-option value="Ferme">Ferme</mat-option>
             <mat-option value="Reconduction expresse">Reconduction expresse</mat-option>
-            <mat-option value="reconduction tacite">reconduction tacite</mat-option>
+            <mat-option value="reconduction tacite">Reconduction tacite</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field class="field-full-width">
-          <input matInput placeholder="Nombre de reconduction" type="number" formControlName="Nbr_rec" min="1" max="12"
+          <input matInput placeholder="Nombre de reconduction maximal" type="number" formControlName="Nbr_rec" min="1" max="12"
             value="0" #Nbr_rec>
         </mat-form-field>
 
@@ -126,7 +126,7 @@
             min="100" value="0" #Montantutilise>
         </mat-form-field>
         <mat-form-field class="field-full-width">
-          <input matInput placeholder="Durée initiale (en mois) *" type="number" formControlName="DureInitial" min="1"
+          <input matInput placeholder="Durée globale du marché (en mois) *" type="number" formControlName="DureInitial" min="1"
             value="1" #DureInitial>
         </mat-form-field>
 
@@ -143,7 +143,7 @@
         </mat-form-field><br>
         <button mat-raised-button color="accent" routerLink="/directions">Retour a la Liste</button>
         &nbsp;
-        <button type="submit"
+        <button type="submit" 
           (click)="suivant_form1(NomDirection.value, NomService.value, Objet.value, Nature.value, TypeProcess.value, FormatProcess.value, TypeMarche.value,Nbr_rec.value,MontantMin.value,MontantMax.value,Montantutilise.value,DureInitial.value,DateDebut.value,Observation.value,Contacte.value)"
           [disabled]="createForm.pristine || createForm.invalid" mat-raised-button color="primary">Suivant</button>
 
