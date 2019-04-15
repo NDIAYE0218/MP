@@ -18,7 +18,6 @@ import { AjouterMarcheComponent } from './compoments/ajouter-marche/ajouter-marc
 import { FileUploadModule } from 'ng2-file-upload';
 import { CsvMarcheComponent } from './compoments/csv-marche/csv-marche.component';
 import { ConnexionComponent } from './compoments/connexion/connexion.component';
-import { AjouterUsersComponent } from './ajouter-users/ajouter-users.component';
 const routes: Routes = [
   { path: 'marches/:id', component: MarcheComponent },
   { path: 'direction/ajouter', component: AjouterDirectionComponent },
@@ -50,7 +49,6 @@ display: {
     AjouterMarcheComponent,
     CsvMarcheComponent,
     ConnexionComponent,
-    AjouterUsersComponent,
 
   ],
   imports: [

@@ -2,3 +2,186 @@
 
 html, body { height: 100%;}
 body { margin: 0; font-family: 'Roboto', sans-serif; }
+.create-form {
+    min-width: 150px;
+    max-width: auto;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+    width: 50%;
+  }
+  .field-full-width{
+      width: 450px;
+      margin-right: 10px;
+  }
+  
+table {
+    width: 100%;
+}
+
+.mat-column-right {
+    text-align: center;
+}
+
+.field-full-width-mont {
+    width: 297px;
+    margin-right: 10px;
+}
+
+.my-drop-zone {
+    border: dotted 3px rgba(24, 56, 170, 0.781);
+    width: 800px;
+    height: 115px;
+    margin: auto;
+    text-align: center;
+    font-size: 180%;
+    color: #ff4081;
+}
+
+table {
+    width: 800px;
+    margin: auto;
+}
+
+th {
+    font-size: 18px;
+    color: rgb(24, 56, 170);
+    width: 50%;
+    margin: auto;
+    text-align: left;
+    margin: auto;
+}
+
+.inline-block {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.25%;
+}
+
+.invalid-drag {
+    border: dotted 3px red;
+}
+
+.valid-drag {
+    border: dotted 3px green;
+}
+
+.prog {
+    height: 40px;
+    margin-bottom: 7px;
+}
+
+.avnt_up {}
+
+.img {
+    width: 800px;
+}
+.my-drop-zone {
+    border: dotted 3px rgba(24, 56, 170, 0.781);
+    width: 800px; 
+    height: 115px;
+    margin: auto;
+    text-align: center;
+    font-size: 180%;
+    color: #ff4081;
+   }
+   table {
+       width: 800px;
+       margin: auto;
+   }
+   th{
+     font-size: 18px;
+     color: rgb(24, 56, 170);
+     width: 50%;
+     margin: auto;
+     text-align: left;
+     margin: auto;
+   }
+.inline-block{
+       width: 800px;
+       margin-left:auto;
+       margin-right: auto;
+       margin-top: 3%;
+     }
+.invalid-drag { border: dotted 3px red; }
+.valid-drag { border: dotted 3px green; }
+.prog{
+   height: 40px;
+   margin-bottom: 7px;
+}
+.avnt_up{
+
+}
+.img{width: 800px;}
+table {
+    width: 100%;
+}
+
+.mat-column-right {
+    text-align: center;
+}
+.affiche{
+    font-size: 90%;
+    width: 100%;
+    margin-top: 3%;
+}
+.titre{
+    color:  #ff4081;
+    text-align: center;
+}
+.contenue{
+    margin-bottom: 2%;
+    margin-top: 2%;
+    margin-left: 5%;
+    text-align: left;
+    font-size: 170%;
+    margin-left: 5%;
+    margin: auto;
+    width: 800px;
+    height: 200px;
+}
+
+.rec{
+    border-style: solid;
+    border-color: #ff4081;
+    margin: auto;
+    text-align: center;
+    }
+
+.rec-det{
+    border-style: solid;
+    border-color: rgba(24, 56, 170, 0.781);
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+.card-title {
+    background:  rgba(24, 56, 170, 0.781);
+    color: #ff4081;
+    justify-content: center;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+.card-content{
+    border-style: solid;
+    border-color: #ff4081;
+    justify-content: center;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+table {
+    width: 100%;
+    text-align: left;
+  }
+th,tr{
+    width: 50%;
+}
+.tra{
+    width: 25%;
+}
