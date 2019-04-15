@@ -24,6 +24,7 @@
     "@angular/router": "^6.1.0",
     "@toverux/ngx-sweetalert2": "^4.0.0",
     "angular-material-fileupload": "^2.0.0",
+    "angular2-cookie": "^1.2.6",
     "babel": "^6.23.0",
     "core-js": "^2.5.4",
     "ng2-file-upload": "^1.3.0",

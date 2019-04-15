@@ -2,6 +2,7 @@ var DirectionGeneral=require('../controleur/DirectionGeneral')
 var Services=require('../controleur/Services')
 var Contactes=require('../controleur/Contactes')
 var Marches=require('../controleur/Marches')
+var Users=require('../controleur/Users')
 module.exports = function(app) {
     //route des Directions
     app.get('/Directions',DirectionGeneral.listeDirection)
@@ -26,6 +27,12 @@ module.exports = function(app) {
     .post('/Marche/upload',Marches.uploderMarche)
     .get('/file_marche/:nomfichier',Marches.downoald_file)
     .post('/Marche/file_marche',Marches.Associer_File_marche)
+    //route des connexions
+    .post('/Users',Users.AjouterUsers)
+    .post('/Users/Forget/:option',Users.Forget)
+    .put('/Users',Users.UpdateUser)
+    .put('/Users/password',Users.UpdatePassord)
+    .post('/Users/Connexion',Users.Connexion)
     //.post('/Marche/upload',Marches.uploderMarche) //pour l'ajout des marché depuis un fichier CSV ou .xlsx
     //route des statistiques
 }
