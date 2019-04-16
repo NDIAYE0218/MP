@@ -83,11 +83,27 @@ module.exports = {
             else
                 res.json(users)
         })
+    },
+    GetAll: function(req,res){
+        Users.find({},function(err,users){
+            if(err)
+            console.log("erreur de recherche")
+            else
+            res.json(users)
+        })
+    },
+    Delete: function(req,res){
+        Users.deleteOne({_id:req.params._id},function(err){
+            if(err)
+            console.log("erreur de suppression")
+            else
+            res.json({etat:"ok"})
+        })
     }
 }
 function sendmail(to, crypto, option) {
     var etat = (option == 0) ? " nouvelle inscription " : " demande de renouvellement "
-    var lien = "http://localhost:4200/" + crypto
+    var lien = "http://localhost:4200/Reinitialisation/" + crypto
     var message = "<h2>Bonjour, <br>Suite a votre" + etat + "veuillez cliquer <a href=\"" + lien + "\">ici</a> pour creer un nouveau mot de passe.</h2>"
     var mailOptions = {
         from: '"Ne pas repondre (Alerte des Marchés Publics)" <neparepondre.AMP@ville-clichy.fr>', // sender address

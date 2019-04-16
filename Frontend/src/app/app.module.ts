@@ -11,6 +11,7 @@ import { DirectionsComponent } from './compoments/directions/directions.componen
 import { DirectionComponent } from './compoments/direction/direction.component';
 import { AjouterDirectionComponent } from './compoments/ajouter-direction/ajouter-direction.component';
 import { DirectionService } from './direction.service';
+import {UserService} from './user.service'
 import {MarcheService} from './marche.service'
 import { MarchesComponent } from './compoments/marches/marches.component';
 import { MarcheComponent } from './compoments/marche/marche.component';
@@ -18,11 +19,17 @@ import { AjouterMarcheComponent } from './compoments/ajouter-marche/ajouter-marc
 import { FileUploadModule } from 'ng2-file-upload';
 import { CsvMarcheComponent } from './compoments/csv-marche/csv-marche.component';
 import { ConnexionComponent } from './compoments/connexion/connexion.component';
+import { AjouterUsersComponent } from './compoments/ajouter-users/ajouter-users.component';
+import { UtilisateursComponent } from './compoments/utilisateurs/utilisateurs.component';
+import { ForgetPasswordComponent } from './compoments/forget-password/forget-password.component';
 const routes: Routes = [
   { path: 'marches/:id', component: MarcheComponent },
   { path: 'direction/ajouter', component: AjouterDirectionComponent },
   { path: 'marche/ajouter', component: AjouterMarcheComponent },
   { path: 'marche/ajouter/csv', component: CsvMarcheComponent },
+  { path: 'utilisateur', component: UtilisateursComponent },
+  { path: 'utilisateur/ajout', component: AjouterUsersComponent },
+  { path: 'Reinitialisation/:crypto', component: ForgetPasswordComponent },
   { path: 'marches', component: MarchesComponent },
   { path: '', redirectTo: 'marches', pathMatch: 'full' }
 ];
@@ -49,6 +56,9 @@ display: {
     AjouterMarcheComponent,
     CsvMarcheComponent,
     ConnexionComponent,
+    AjouterUsersComponent,
+    UtilisateursComponent,
+    ForgetPasswordComponent
 
   ],
   imports: [
@@ -80,7 +90,7 @@ display: {
     MatProgressBarModule,
     ngfModule
   ],
-  providers: [DirectionService,MarcheService,{provide: MAT_DATE_LOCALE, useValue: 'fr'},{ provide: MAT_DATE_FORMATS, useValue: DateFormat }],
+  providers: [DirectionService,MarcheService,UserService,{provide: MAT_DATE_LOCALE, useValue: 'fr'},{ provide: MAT_DATE_FORMATS, useValue: DateFormat }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

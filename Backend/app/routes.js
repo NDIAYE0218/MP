@@ -28,11 +28,13 @@ module.exports = function(app) {
     .get('/file_marche/:nomfichier',Marches.downoald_file)
     .post('/Marche/file_marche',Marches.Associer_File_marche)
     //route des connexions
+    .get('/Users',Users.GetAll)
+    .post('/Users/Connexion',Users.Connexion)
     .post('/Users',Users.AjouterUsers)
     .post('/Users/Forget/:option',Users.Forget)
     .put('/Users',Users.UpdateUser)
     .put('/Users/password',Users.UpdatePassord)
-    .post('/Users/Connexion',Users.Connexion)
+    .delete('/Users',Users.Delete)
     //.post('/Marche/upload',Marches.uploderMarche) //pour l'ajout des marché depuis un fichier CSV ou .xlsx
     //route des statistiques
 }

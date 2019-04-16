@@ -2,7 +2,27 @@
   <br>
   <mat-card>
     <form [formGroup]="ajoutUser" class="create-form">
-
+      <mat-form-field class="field-full-width">
+        <input placeholder="Nom *" type="text" matInput formControlName="Nom" #Nom>
+      </mat-form-field>
+      <mat-form-field class="field-full-width">
+        <input placeholder="Prenom *" type="text" matInput formControlName="Prenom" #Prenom>
+      </mat-form-field>
+      <mat-form-field class="field-full-width">
+        <input placeholder="Poste *" type="text" matInput formControlName="Poste" #Poste>
+      </mat-form-field>
+      <mat-form-field class="field-full-width">
+        <input placeholder="Email *" type="email" matInput formControlName="Email" #Email>
+      </mat-form-field>
+      <mat-form-field class="field-full-width">
+        <mat-select placeholder="Droit de l'utilisateur *" formControlName="Droit" [(ngModel)]="selected" #Droit>
+          <mat-option value="0">Ajouter marché</mat-option>
+          <mat-option value="1">Ajouter et modifier marché</mat-option>
+          <mat-option value="2">Ajouter, modifier et supprimer marché</mat-option>
+          <mat-option value="3">Ajouter, modifier, supprimer marché et utilisateur</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button type="submit" class="field-full-width" (click)="AjouterUsers(Nom.value,Prenom.value,Poste.value,Email.value,Droit.value)" [disabled]="ajoutUser.pristine || ajoutUser.invalid" mat-raised-button color="primary" >Ajouter</button>
     </form>
   </mat-card>
 </div>
