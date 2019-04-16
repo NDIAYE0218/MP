@@ -3,7 +3,7 @@ const nodemailer = require("nodemailer")
 var transporter = nodemailer.createTransport('smtp://webmail.ville-clichy.fr/') //smtp du webmail de la ville
 module.exports = {
     AjouterUsers: function (req, res) {
-        user = new Users(req.body)
+        var user = new Users(req.body)
         Users.findOne({ Email: req.body.Email }, function (err, users) {
             if (err)
                 console.log("erreur verification unicité email")
