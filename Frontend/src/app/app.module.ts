@@ -23,6 +23,7 @@ import { AjouterUsersComponent } from './compoments/ajouter-users/ajouter-users.
 import { UtilisateursComponent } from './compoments/utilisateurs/utilisateurs.component';
 import { ForgetPasswordComponent } from './compoments/forget-password/forget-password.component';
 import { CookieService } from "angular2-cookie/services/cookies.service";
+import { ReconductionComponent } from './compoments/reconduction/reconduction.component';
 const routes: Routes = [
   { path: 'marches/:id', component: MarcheComponent },
   { path: 'direction/ajouter', component: AjouterDirectionComponent },
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'Reinitialisation/:crypto', component: ForgetPasswordComponent },
   { path: 'marches', component: MarchesComponent },
   { path: 'Connexion', component: ConnexionComponent },
+  { path: 'Marches/reconduire/:rep/:_id', component: ReconductionComponent },
   { path: '', redirectTo: 'Connexion', pathMatch: 'full' }
 ];
 
@@ -60,8 +62,8 @@ display: {
     ConnexionComponent,
     AjouterUsersComponent,
     UtilisateursComponent,
-    ForgetPasswordComponent
-
+    ForgetPasswordComponent,
+    ReconductionComponent,
   ],
   imports: [
     BrowserModule,

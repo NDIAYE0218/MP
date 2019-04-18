@@ -21,7 +21,7 @@ app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Credentials', true);
   next();
 });
-var j = schedule.scheduleJob('00 57 16 * * *',notification.Scrutteur_Notification);//lancement du process de notification
+var j = schedule.scheduleJob('00 23 10 * * *',notification.Scrutteur_Notification);//lancement du process de notification
 app.get("/Marches/reconduire/:_id",notification.Reconduction_expresse) //chemin exeptionnel pour la reconduction d'un marché express
 app.use(bp.json())
 require('./app/routes')(app);

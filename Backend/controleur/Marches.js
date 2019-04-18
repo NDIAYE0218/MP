@@ -125,8 +125,6 @@ module.exports = {
                 throw err;
             res.json(marche)
         }).sort({ _id: -1 })
-    },
-    relancerMarcher: function (req, res) {
     }
 }
 function traiteur_upload(result) {

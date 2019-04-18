@@ -262,4 +262,5 @@ export class AjouterMarcheComponent implements OnInit {
   getDate(){
     return new Date()
   }
+  
 }

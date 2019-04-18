@@ -118,7 +118,8 @@
       </tr>
     </table>
     <br>
-    <button mat-button color="primary"  *ngIf="marche.historique.length>0" (click)="histo_vue()">Voir l'historique des modifications</button>
+    <button mat-button color="primary" *ngIf="marche.historique.length>0" (click)="histo_vue()">Voir l'historique des
+      modifications</button>
     <div [hidden]="histo">
       <table>
         <tr>
@@ -135,7 +136,10 @@
         </tr>
       </table>
     </div>
-
+    <br>
+    <button type="submit" (click)="Telecharger(marche)" class="field-full-width"
+       mat-raised-button color="primary">Telecharger format pdf</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button mat-raised-button color="accent" class="field-full-width" routerLink="/marches">Retour</button>
   </mat-card>
 
   <div class="titre">

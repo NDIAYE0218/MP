@@ -38,19 +38,6 @@ table {
     color: #ff4081;
 }
 
-table {
-    width: 800px;
-    margin: auto;
-}
-
-th {
-    font-size: 18px;
-    color: rgb(24, 56, 170);
-    width: 50%;
-    margin: auto;
-    text-align: left;
-    margin: auto;
-}
 
 .inline-block {
     width: 800px;
@@ -86,18 +73,7 @@ th {
     font-size: 180%;
     color: #ff4081;
    }
-   table {
-       width: 800px;
-       margin: auto;
-   }
-   th{
-     font-size: 18px;
-     color: rgb(24, 56, 170);
-     width: 50%;
-     margin: auto;
-     text-align: left;
-     margin: auto;
-   }
+   
 .inline-block{
        width: 800px;
        margin-left:auto;
@@ -174,14 +150,4 @@ table {
     width: 1000px;
     margin-left: auto;
     margin-right: auto;
-}
-table {
-    width: 100%;
-    text-align: left;
-  }
-th,tr{
-    width: 50%;
-}
-.tra{
-    width: 25%;
 }

@@ -2,7 +2,7 @@ var Marches = require('../app/models/Marches')
 const nodemailer = require("nodemailer")
 var transporter = nodemailer.createTransport('smtp://webmail.ville-clichy.fr/') //smtp du webmail de la ville
 module.exports = {
-Scrutteur_Notification: function () {
+    Scrutteur_Notification: function () {
         //generation de la date d'aujourd'hui en bon format
         var tdy = new Date(); var month = String((tdy.getMonth() + 1)); var day = String(tdy.getDate())
         if (month.length < 2) month = '0' + month;
@@ -40,35 +40,40 @@ Scrutteur_Notification: function () {
                     var march = marche[i]
                     mess = Message_texte(march, 1)
 
-                    if(march.Type_Marche=="Reconduction tacite"){
+                    if (march.Type_Marche == "Reconduction tacite") {
                         //si la reconduction es tacite on active la reconduction du marché
                         march.Total_relance = (march.Total_relance == 0) ? 1 : march.Total_relance
                         update_reconductionDate(march, calcul_date_rec(march).dte, calcul_date_rec(march).an)
                     }
-                    else{
+                    else {
                         //si la reconduction es express on laisse a l'utilisateur le soins de reconduire ou non le du marché
-                        march.bloque=1
-                        update_reconductionDate(march,march.Date_reconduction_courante,march.Total_relance)
+                        march.bloque = 1
+                        update_reconductionDate(march, march.Date_reconduction_courante, march.Total_relance)
                     }
                 }
                 mailer(mess.subject, mess.message, to)
             }
         })
     },
-Reconduction_expresse: function(req, res){
-    //elle permet a l'utilisateur d'activer la reconduction d'un marché reconductible expressement
-    var _id = req.params._id
-    Marches.findOne({ "_id": _id,"Type_Marche":"Reconduction expresse" }, function (err, marche) {
-        var modif=(typeof marche.bloque!="undefined" &&( marche.bloque==0 || marche.Date_reconduction_courante==marche.D_clot))?false:true //verification qu'on a bien le droit de modifier
-        console.log(modif)
-        if(modif)
-        {
-            marche.bloque=0 //si on modifie on bloque la modification jusqu'au nouvel envoie d'email
-            marche.Total_relance = (marche.Total_relance == 0) ? 1 : marche.Total_relance
-            update_reconductionDate(marche, calcul_date_rec(marche).dte, calcul_date_rec(marche).an)
-        }
-    })
-}
+    Reconduction_expresse: function (req, res) {
+        //elle permet a l'utilisateur d'activer la reconduction d'un marché reconductible expressement
+        var _id = req.params._id
+        Marches.findOne({ "_id": _id, "Type_Marche": "Reconduction expresse" }, function (err, marche) {
+            if (marche != null) {
+                var modif = (typeof marche.bloque != "undefined" && (marche.bloque == 0 || marche.Date_reconduction_courante == marche.D_clot)) ? false : true //verification qu'on a bien le droit de modifier
+                if (modif) {
+                    marche.bloque = 0 //si on modifie on bloque la modification jusqu'au nouvel envoie d'email
+                    marche.Total_relance = (marche.Total_relance == 0) ? 1 : marche.Total_relance
+                    update_reconductionDate(marche, calcul_date_rec(marche).dte, calcul_date_rec(marche).an)
+                    res.json({ etat: "ok" })
+                }
+                else
+                res.json({ etat: "dead" })
+            }
+            else
+                res.json({ etat: "notfind" })
+        })
+    }
 }
 function mailer(subject, message, to) {
     var mailOptions = {
@@ -102,7 +107,7 @@ function Message_texte(marche, i) { //i pour determiner le type de messasge souh
         subject = "Marché " + numarche + " (" + marche.Type_Marche + ") INFORMATION"
         message = (marche.Type_Marche == "Ferme") ? "Bonjour,<br>Le marché <b>" + numarche + "</b>, ayant pour objet <b>" + marche.objet + " (voir les détail du marché <a href='" + lien + "'>ici</a>)</b> arrive à échéance dans un mois jour pour jour.<br>Si un nouveau marché du même type a été lancé nous vous invitons a l'ajouter sur la plateforme AMP."
             : (marche.Type_Marche == "Reconduction tacite") ? "Bonjour,<br>Le marché <b>" + numarche + "</b>, ayant pour objet <b>" + marche.objet + " (voir les détail du marché <a href='" + lien + "'>ici</a>)</b> arrive à échéance dans un mois jour pour jour.<br>Etant un marché de type <b>Reconduction tacite</b>, il est automatiquement relancé pour une duré d'un an sur la plateforme AMP."
-                : "Bonjour,<br>Le marché <b>" + numarche + "</b>, ayant pour objet <b>" + marche.objet + "</b> arrive à échéance dans un mois jour pour jour.<br>Ce marché de type <b>Reconduction expresse, a t'il été reconduit? <b><br> <center> <button>OUI</button> <button>NON</button> </center>."
+                : "Bonjour,<br>Le marché <b>" + numarche + "</b>, ayant pour objet <b>" + marche.objet + "</b> arrive à échéance dans un mois jour pour jour.<br>Ce marché de type <b>Reconduction expresse, a t'il été reconduit? <b><br> <center> <h3><a style=\"color: blue\" href=\"http://localhost:4200/Marches/reconduire/1/" + marche._id + "\">OUI</a>&nbsp;<a style=\"color: red\" href=\"http://localhost:4200/Marches/Reconduction/0/" + marche._id + "\">NON</a></h3> </center>."
     }
     else {
         subject = "Marché " + numarche + " (" + marche.Type_Marche + ") INFORMATION"

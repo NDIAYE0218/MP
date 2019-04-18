@@ -34,6 +34,9 @@ export class MarcheService {
       error => console.log('oops', error)
     );
   }
+  reconductionExpresse(_id){
+    return this.http.get(`${this.uri}/Marches/reconduire/` + _id)
+  }
   generateur_date(dte, nb_mois, nbr_rec) {//dte représente la date du debut du marchéet nb_mois le nombre de mois (duré initiale du marché), et le nombre de reconduction pour estimer la valeur d'une periode
     var format = dte.split('/');
     dte = format[1] + "/" + format[0] + "/" + format[2]
