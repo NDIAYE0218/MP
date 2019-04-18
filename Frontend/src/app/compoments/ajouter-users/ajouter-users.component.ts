@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { UserService } from '../../user.service'
 import swal from 'sweetalert2';
+import { Router } from '@angular/router'
 @Component({
   selector: 'app-ajouter-users',
   templateUrl: './ajouter-users.component.html',
@@ -10,7 +11,7 @@ import swal from 'sweetalert2';
 export class AjouterUsersComponent implements OnInit {
   ajoutUser: FormGroup
   selected = "0"
-  constructor(private fb: FormBuilder, private userservice: UserService) {
+  constructor(private fb: FormBuilder, private userservice: UserService,private route:Router) {
     this.ajoutUser = this.fb.group({
       Nom: ['', [Validators.minLength(2), Validators.required]],
       Prenom: ['', [Validators.minLength(2), Validators.required]],
@@ -21,6 +22,12 @@ export class AjouterUsersComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.userservice.Access()){
+      if(this.userservice.InfoUser().Droit<3)
+        this.route.navigate(['marches'])
+    }
+    else
+    this.route.navigate(['marches'])
   }
   AjouterUsers(Nom, Prenom, Poste, Email, Droit) {
     var mail_ok=(Email.substring(Email.length-15).toLowerCase()=="ville-clichy.fr")

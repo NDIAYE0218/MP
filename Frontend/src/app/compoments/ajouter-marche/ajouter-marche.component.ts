@@ -7,8 +7,9 @@ import { DirectionService } from '../../direction.service'
 import { Direction } from '../../Models/directions.model'
 import { Service } from '../../Models/services.model'
 import { Contact } from '../../Models/contact.model'
+import {UserService} from '../../user.service'
 import swal from 'sweetalert2';
-import { Observable,Subscription } from 'rxjs';
+import { Observable,Subscription, from } from 'rxjs';
 import {  } from 'rxjs'
 import {
   HttpClient, HttpRequest,
@@ -47,7 +48,8 @@ export class AjouterMarcheComponent implements OnInit {
   httpEvent:HttpEvent<{}>
   lastFileAt:Date
   sendableFormData:FormData
-  constructor(private marcheservice: MarcheService, private contactservice: ContacteService, private directionService: DirectionService, private fb: FormBuilder, private router: Router,public HttpClient:HttpClient) {
+  droit=-1
+  constructor(private userservice : UserService,private marcheservice: MarcheService, private contactservice: ContacteService, private directionService: DirectionService, private fb: FormBuilder, private router: Router,public HttpClient:HttpClient) {
     this.createForm = this.fb.group({
       NomDirection: ['', Validators.required],
       NomService: ['', Validators.required],
@@ -88,8 +90,15 @@ export class AjouterMarcheComponent implements OnInit {
   }
   ngOnInit() {
     //initialisation des vue 
-    this.form1 = false; this.form2 = true; this.form3 = true
-    this.fetchDirection();
+    if(this.userservice.Access())
+    {
+      this.form1 = false; this.form2 = true; this.form3 = true
+      this.fetchDirection();
+    }
+    else
+    {
+      this.router.navigate(['marches'])
+    }
   }
   onSelect() {
     this.IsHidden = !this.IsHidden;

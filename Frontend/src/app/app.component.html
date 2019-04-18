@@ -7,13 +7,14 @@
   <div class="men-items">
     <button mat-raised-button [matMenuTriggerFor]="marche" color="accent" class="men-item"><mat-icon>shopping_cart</mat-icon>Marchés</button>
     <button mat-raised-button [matMenuTriggerFor]="stats" color="accent" class="men-item"><mat-icon>bar_chart</mat-icon>Statistiques</button>
-    <button mat-raised-button color="accent" class="men-item"> <mat-icon>notification_important</mat-icon>Détails des notifications</button>
-    <button mat-raised-button color="accent" class="men-item" routerLink="/utilisateur"><mat-icon>account_box</mat-icon>Utilisateurs</button>
-    <button mat-raised-button color="accent" class="men-item" routerLink="/direction/ajouter"><mat-icon>library_add</mat-icon>Ajout Directions et services</button>
+    <button mat-raised-button color="accent" class="men-item" *ngIf="droit>=0"> <mat-icon>notification_important</mat-icon>Détails des notifications</button>
+    <button mat-raised-button color="accent" class="men-item" routerLink="/utilisateur" *ngIf="droit>=3"><mat-icon>account_box</mat-icon>Utilisateurs</button>
+    <button mat-raised-button color="accent" class="men-item" routerLink="/direction/ajouter" *ngIf="droit>=0"><mat-icon>library_add</mat-icon>Ajout Directions et services</button>
     <button mat-raised-button color="accent" class="men-item"><mat-icon>help</mat-icon>Aide et Manuel d'utilisation</button>
+    <button mat-raised-button color="accent" class="men-item" (click)="Deconnexion()"> <mat-icon *ngIf="droit>=0">exit_to_app</mat-icon><span *ngIf="droit>=0">Deconnexion</span> <mat-icon *ngIf="droit==-1">person_outline</mat-icon><span *ngIf="droit==-1">Connexion</span></button>
     <mat-menu #marche="matMenu">
       <button mat-menu-item routerLink="/marches"><mat-icon>view_list</mat-icon>Voir tous les Marchés</button>
-      <button mat-menu-item [matMenuTriggerFor]="AjoutMarche" ><mat-icon>add_shopping_cart</mat-icon>Ajouter Marchés</button>
+      <button mat-menu-item [matMenuTriggerFor]="AjoutMarche" *ngIf="droit>=0" ><mat-icon>add_shopping_cart</mat-icon>Ajouter Marchés</button>
     </mat-menu>
     <mat-menu #stats="matMenu">
       <button mat-menu-item [matMenuTriggerFor]="finances"> <mat-icon>euro_symbol</mat-icon>Statistiques financiers</button>
@@ -29,7 +30,6 @@
         <button mat-menu-item><mat-icon>show_chart</mat-icon>En fonction des services</button>
         <button mat-menu-item><mat-icon>table_chart</mat-icon>Montant total par année</button>
     </mat-menu>
-
   </div>
 </mat-toolbar>
 <div>

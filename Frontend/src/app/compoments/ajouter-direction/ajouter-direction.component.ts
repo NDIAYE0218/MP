@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormGroup,FormBuilder, Validators} from '@angular/forms'
 import {Router} from '@angular/router'
 import {DirectionService} from '../../direction.service'
+import {UserService} from '../../user.service'
 import swal from 'sweetalert2';
 @Component({
   selector: 'app-ajouter-direction',
@@ -12,8 +13,8 @@ export class AjouterDirectionComponent implements OnInit {
 
   createForm: FormGroup;
   serviceForm: FormGroup;
-
-  constructor(private directionService: DirectionService, private fb: FormBuilder, private router: Router) {
+  droit=-1
+  constructor(private directionService: DirectionService, private fb: FormBuilder, private router: Router,private userservice:UserService) {
     this.createForm = this.fb.group({
       NumDG: ['',Validators.required],
       Nom: ['',Validators.required]
@@ -37,6 +38,14 @@ export class AjouterDirectionComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.userservice.Access())
+    {
+      this.droit=this.userservice.InfoUser().Droit
+    }
+    else
+    {
+      this.router.navigate(['marches'])
+    }
   }
 
 }

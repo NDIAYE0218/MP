@@ -60,8 +60,8 @@
             <button mat-button color="primary"
               routerLink="/marches/{{element.An}}-{{element.NumMarche}}">Afficher</button>
             <button mat-button color="" *ngIf="element.historique.length>0" (click)="historique(element.historique)">Voir Historique</button>
-            <button mat-button color="accent" (click)="modifier(element)" >Modifier</button>
-            <button mat-button color="warn" (click)="suppmarche(element.An,element.NumMarche)">Supprimer</button>
+            <button mat-button color="accent" (click)="modifier(element)" *ngIf="droit>=1">Modifier</button>
+            <button mat-button color="warn" (click)="suppmarche(element.An,element.NumMarche)" *ngIf="droit>=2">Supprimer</button>
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="ColumnsInformation"></tr>
@@ -112,8 +112,8 @@
             <button mat-button color="primary"
               routerLink="/marches/{{element.An}}-{{element.NumMarche}}">Afficher</button>
             <button mat-button color="" *ngIf="element.historique.length>0" (click)="historique(element.historique)">Voir Historique</button>
-            <button mat-button color="accent" (click)="modifier(element)" >Modifier</button>
-            <button mat-button color="warn" (click)="suppmarche(element.An,element.NumMarche)">Supprimer</button>
+            <button mat-button color="accent" (click)="modifier(element)" *ngIf="droit>=1">Modifier</button>
+            <button mat-button color="warn" (click)="suppmarche(element.An,element.NumMarche)" *ngIf="droit>=2">Supprimer</button>
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="ColumnsDirection"></tr>
@@ -164,8 +164,8 @@
             <button mat-button color="primary"
               routerLink="/marches/{{element.An}}-{{element.NumMarche}}">Afficher</button>
             <button mat-button color="" *ngIf="element.historique.length>0" (click)="historique(element.historique)">Voir Historique</button>
-            <button mat-button color="accent" (click)="modifier(element)" >Modifier</button>
-            <button mat-button color="warn" (click)="suppmarche(element.An,element.NumMarche)">Supprimer</button>
+            <button mat-button color="accent" (click)="modifier(element)" *ngIf="droit>=1">Modifier</button>
+            <button mat-button color="warn" (click)="suppmarche(element.An,element.NumMarche)" *ngIf="droit>=2">Supprimer</button>
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="ColumnsMontant"></tr>
@@ -238,8 +238,8 @@
             <button mat-button color="primary"
               routerLink="/marches/{{element.An}}-{{element.NumMarche}}">Afficher</button>
             <button mat-button color="" *ngIf="element.historique.length>0" (click)="historique(element.historique)">Voir Historique</button>
-            <button mat-button color="accent" (click)="modifier(element)" >Modifier</button>
-            <button mat-button color="warn" (click)="suppmarche(element.An,element.NumMarche)">Supprimer</button>
+            <button mat-button color="accent" (click)="modifier(element)" *ngIf="droit>=1">Modifier</button>
+            <button mat-button color="warn" (click)="suppmarche(element.An,element.NumMarche)" *ngIf="droit>=2">Supprimer</button>
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="ColumsTitulaire"></tr>
@@ -291,8 +291,8 @@
             <button mat-button color="primary"
               routerLink="/marches/{{element.An}}-{{element.NumMarche}}">Afficher</button>
             <button mat-button color="" *ngIf="element.historique.length>0" (click)="historique(element.historique)">Voir Historique</button>
-            <button mat-button color="accent" (click)="modifier(element)" >Modifier</button>
-            <button mat-button color="warn" (click)="suppmarche(element.An,element.NumMarche)">Supprimer</button>
+            <button mat-button color="accent" (click)="modifier(element)" *ngIf="droit>=1">Modifier</button>
+            <button mat-button color="warn" (click)="suppmarche(element.An,element.NumMarche)" *ngIf="droit>=2">Supprimer</button>
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="ColumnsDates"></tr>
@@ -334,8 +334,8 @@
             <button mat-button color="primary"
               routerLink="/marches/{{element.An}}-{{element.NumMarche}}">Afficher</button>
             <button mat-button color="" *ngIf="element.historique.length>0" (click)="historique(element.historique)">Voir Historique</button>
-            <button mat-button color="accent" (click)="modifier(element)" >Modifier</button>
-            <button mat-button color="warn" (click)="suppmarche(element.An,element.NumMarche)">Supprimer</button>
+            <button mat-button color="accent" (click)="modifier(element)" *ngIf="droit>=1">Modifier</button>
+            <button mat-button color="warn" (click)="suppmarche(element.An,element.NumMarche)" *ngIf="droit>=2">Supprimer</button>
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="ColumsFiles"></tr>

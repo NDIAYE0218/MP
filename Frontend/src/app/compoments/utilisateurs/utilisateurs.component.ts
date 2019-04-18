@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../../user.service'
 import swal from 'sweetalert2';
+import { Router } from '@angular/router'
 @Component({
   selector: 'app-utilisateurs',
   templateUrl: './utilisateurs.component.html',
@@ -9,9 +10,16 @@ import swal from 'sweetalert2';
 export class UtilisateursComponent implements OnInit {
   Columnsusers = ['Email', 'Nom', 'Prenom', 'Poste','Droits', 'act']
   users:any
-  constructor(private userservice:UserService) { }
+  constructor(private userservice:UserService,private route:Router) { }
   ngOnInit() {
-    this.findUsers()
+    if(this.userservice.Access()){
+      if(this.userservice.InfoUser().Droit<3)
+        this.route.navigate(['marches'])
+      else
+      this.findUsers()
+    }
+    else
+    this.route.navigate(['marches'])
   }
   findUsers(){
     this.userservice.GetAll().subscribe((data:any)=>{

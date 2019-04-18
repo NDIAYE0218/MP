@@ -1,0 +1,12 @@
+.connexion{
+    margin: auto;
+    margin-top: 2.5%;
+    width: 35%;
+}
+.mat-icon {
+    font-size: 60px;
+    color: rgb(24, 56, 170);
+}
+.field{
+    width: 110%;
+}

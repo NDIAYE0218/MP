@@ -4,7 +4,7 @@ import { MarcheService } from '../../marche.service'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import swal from 'sweetalert2';
-import { htmlAstToRender3Ast } from '@angular/compiler/src/render3/r3_template_transform';
+import {UserService} from '../../user.service'
 @Component({
   selector: 'app-marches',
   templateUrl: './marches.component.html',
@@ -19,15 +19,17 @@ export class MarchesComponent implements OnInit {
   ColumnsDates = ['NumMarche', 'objet', 'dte_not', 'dte_clo', 'duree', 'tot_recond', 'duree_total', 'act']
   ColumsTitulaire = ['NumMarche', 'objet', 'Type', 'Nom', 'Nom_Contacte', 'Mail_Contacte', 'Adresse', 'act']
   ColumsFiles = ['NumMarche', 'objet', 'fichiers', 'act']
-  constructor(private marcheservice: MarcheService, private fb: FormBuilder, private router: Router) {
+  droit=-1
+  constructor(private marcheservice: MarcheService, private fb: FormBuilder, private router: Router, private userservice:UserService) {
     this.createForm = this.fb.group({
       Annee_rech: ['', [Validators.nullValidator, Validators.maxLength(4), Validators.minLength(4)]],
       ID_rech: ['', [Validators.nullValidator, Validators.maxLength(6), Validators.minLength(6)]]
     })
   }
-
   ngOnInit() {
-    this.fetchdata();
+    this.fetchdata()
+    if(this.userservice.Access())
+    this.droit=this.userservice.InfoUser().Droit
   }
   fetchdata() {
     let timerInterval

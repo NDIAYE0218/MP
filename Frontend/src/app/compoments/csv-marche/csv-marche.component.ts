@@ -1,6 +1,7 @@
-import { Component} from '@angular/core';
+import { Component,OnInit} from '@angular/core';
 import { Subscription } from 'rxjs'
 import { Router } from '@angular/router'
+import {UserService} from '../../user.service'
 import {
   HttpClient, HttpRequest,
   HttpResponse, HttpEvent
@@ -21,13 +22,17 @@ export class CsvMarcheComponent  {
   httpEvent:HttpEvent<{}>
   lastFileAt:Date
   sendableFormData:FormData
-  constructor(public HttpClient:HttpClient,private router: Router){}
+  constructor(public HttpClient:HttpClient,private router: Router,private userservice:UserService){}
   cancel(){
     this.progress = 0
     if( this.httpEmitter ){
       console.log('cancelled')
       this.httpEmitter.unsubscribe()
     }
+  }
+  ngOnInit(){
+    if(!this.userservice.Access())
+      this.router.navigate(['marches'])
   }
 
   uploadFiles(files:File[]):Subscription{

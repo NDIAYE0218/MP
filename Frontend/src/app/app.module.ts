@@ -22,6 +22,7 @@ import { ConnexionComponent } from './compoments/connexion/connexion.component';
 import { AjouterUsersComponent } from './compoments/ajouter-users/ajouter-users.component';
 import { UtilisateursComponent } from './compoments/utilisateurs/utilisateurs.component';
 import { ForgetPasswordComponent } from './compoments/forget-password/forget-password.component';
+import { CookieService } from "angular2-cookie/services/cookies.service";
 const routes: Routes = [
   { path: 'marches/:id', component: MarcheComponent },
   { path: 'direction/ajouter', component: AjouterDirectionComponent },
@@ -31,7 +32,8 @@ const routes: Routes = [
   { path: 'utilisateur/ajout', component: AjouterUsersComponent },
   { path: 'Reinitialisation/:crypto', component: ForgetPasswordComponent },
   { path: 'marches', component: MarchesComponent },
-  { path: '', redirectTo: 'marches', pathMatch: 'full' }
+  { path: 'Connexion', component: ConnexionComponent },
+  { path: '', redirectTo: 'Connexion', pathMatch: 'full' }
 ];
 
 const DateFormat = {
@@ -90,7 +92,7 @@ display: {
     MatProgressBarModule,
     ngfModule
   ],
-  providers: [DirectionService,MarcheService,UserService,{provide: MAT_DATE_LOCALE, useValue: 'fr'},{ provide: MAT_DATE_FORMATS, useValue: DateFormat }],
+  providers: [CookieService,DirectionService,MarcheService,UserService,{provide: MAT_DATE_LOCALE, useValue: 'fr'},{ provide: MAT_DATE_FORMATS, useValue: DateFormat }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

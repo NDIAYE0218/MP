@@ -129,7 +129,6 @@ module.exports = {
     relancerMarcher: function (req, res) {
     }
 }
-
 function traiteur_upload(result) {
     //fonction permettant l'insertion des marchés
     /**
