@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { MatToolbarModule, MatFormFieldModule, MatInputModule,MatExpansionModule,MatProgressBarModule,MatGridListModule, MatOptionModule, MatSelectModule, MatIconModule, MatButtonModule,MatMenuModule, MatCardModule, MatTableModule, MatDividerModule, MatSnackBarModule, MatDatepickerModule,MatNativeDateModule,MAT_DATE_LOCALE,MAT_DATE_FORMATS,MatAutocompleteModule ,MatTabsModule } from '@angular/material';
-import { ngfModule, ngf } from "angular-file"
+import { ngfModule } from "angular-file"
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DirectionsComponent } from './compoments/directions/directions.component';
