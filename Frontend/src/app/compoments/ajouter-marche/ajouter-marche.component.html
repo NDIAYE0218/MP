@@ -294,7 +294,7 @@
     <!-- fin gestion des infos titulaire-->
 
     <!--gestion des fichiers-->
-    <div [hidden]="form3" class="create-form">
+    <div [hidden]="form3" *ngIf="!form3" class="create-form">
       <!--Gestion des pièces jointes-->
       <section class="mat-typography">
         <h1 style="text-align: center">Rattacher des fichiers au marché (Optionnel)</h1><br>

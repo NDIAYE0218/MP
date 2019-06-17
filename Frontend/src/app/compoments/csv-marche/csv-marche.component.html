@@ -2,7 +2,7 @@
 <ngfUploadStatus [(percent)]="progress" [httpEvent]="httpEvent"></ngfUploadStatus>
 <div class="inline-block">
 <div>
-    <div class="inline-block">
+    <div class="inline-block" *ngIf="validateur">
       <div ngfDrop [(validDrag)]="baseDropValid" (fileOver)="hasBaseDropZoneOver=$event" selectable="1" 
         [(files)]="files" accept=".xlsx" [maxSize]="maxSize" [(dragFiles)]="dragFiles"
         [(lastInvalids)]="lastInvalids" class="well my-drop-zone" [class.invalid-drag]="baseDropValid===false"

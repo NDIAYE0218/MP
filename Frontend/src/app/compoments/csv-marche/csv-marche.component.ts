@@ -22,6 +22,7 @@ export class CsvMarcheComponent  {
   httpEvent:HttpEvent<{}>
   lastFileAt:Date
   sendableFormData:FormData
+  validateur=false
   constructor(public HttpClient:HttpClient,private router: Router,private userservice:UserService){}
   cancel(){
     this.progress = 0
@@ -33,6 +34,8 @@ export class CsvMarcheComponent  {
   ngOnInit(){
     if(!this.userservice.Access())
       this.router.navigate(['marches'])
+    else
+    this.validateur=true
   }
 
   uploadFiles(files:File[]):Subscription{
