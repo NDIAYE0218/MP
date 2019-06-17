@@ -34,6 +34,8 @@ module.exports = function(app) {
     .put('/Users',Users.UpdateUser)
     .put('/Users/password',Users.UpdatePassord)
     .delete('/Users/:_id',Users.Delete)
+    //route des statistiques
+    .get('/Statistiques/:option',Marches.statistiques)
     //.post('/Marche/upload',Marches.uploderMarche) //pour l'ajout des marché depuis un fichier CSV ou .xlsx
     //route des statistiques
 }

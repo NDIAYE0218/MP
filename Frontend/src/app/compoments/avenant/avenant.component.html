@@ -1,0 +1,445 @@
+<div>
+  <br>
+  <mat-card *ngIf="display">
+    <mat-card-header class="card-title">
+      <b>
+        <h1> Modification du marché N°
+          <span *ngIf="marche.NumMarche.toString().length===1">{{marche.An}}-00{{marche.NumMarche}}</span>
+          <span *ngIf="marche.NumMarche.toString().length===2">{{marche.An}}-0{{marche.NumMarche}}</span>
+          <span *ngIf="marche.NumMarche.toString().length===3">{{marche.An}}-{{marche.NumMarche}}</span>
+        </h1>
+      </b>
+    </mat-card-header>
+    <table style="width: 80%;margin: auto;text-align: left">
+      <h2>Information importante</h2>
+      <tr>
+        <th>Objet</th>
+        <th>Direction</th>
+        <th>Forme du marché</th>
+        <th>Montant max global HT</th>
+        <th>Nombre de (co)titulaire(s)</th>
+      </tr>
+      <tr>
+        <td>{{marche.objet}}</td>
+        <td>{{marche.DG}}</td>
+        <td>{{marche.Format_process}}</td>
+        <td>{{marche.Montant_Max_HT_glob}}€</td>
+        <td>{{marche.Titulaire.length}}</td>
+      </tr>
+    </table>
+    <br>
+    <div style="width: 80%;margin: auto">
+      <button mat-raised-button color="primary" (click)="vu_act(-1)">
+        <mat-icon>create</mat-icon> Modifier le marché
+      </button>&nbsp;
+      <button mat-raised-button color="primary" (click)="vu_act(0)">
+        <mat-icon>add</mat-icon> Ajouter un nouveau (co)titulaire(s)
+      </button>&nbsp;
+      <button mat-raised-button color="accent" (click)="vu_act(1)">
+        <mat-icon>play_for_work</mat-icon> Ajouter un avenant
+      </button>&nbsp;
+      <button mat-raised-button color="warn" (click)="vu_act(2)"
+        *ngIf="display_trnche_op && (marche['Tranche_optionnel'].length+1)<3">
+        <mat-icon>settings_ethernet</mat-icon> Ajouter une tranche optionnel
+      </button>&nbsp;
+      <button mat-raised-button style="background-color: crimson;width: 10%" class="field-full-width"
+        routerLink="/marches">
+        <mat-icon>keyboard_backspace</mat-icon>Retour
+      </button>
+    </div>
+    <div *ngIf="vu_modif" style="width: 80%;margin: auto">
+      <form [formGroup]="chx_modif" *ngIf="vu_modif_f1">
+        <h2 style="text-align: center">Modification générale</h2>
+        <mat-form-field style="width: 50%;margin-left: 25%">
+          <mat-select formControlName="choix" #choix placeholder="Choisir type de Modification">
+            <mat-option value="Accord cadre" (click)="active_vue_act_men(0)">Modifier les Informations générales
+            </mat-option>
+            <mat-option value="Marché ordinaire" (click)="active_vue_act_men(1)">Modifier les titulaires</mat-option>
+            <mat-option value="Tranches optionnelles" (click)="active_vue_act_men(2)">modifier les pieces jointes
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+      <!--modif global-->
+      <form [formGroup]="createForm" class="create-form" *ngIf="vu_modif_f2">
+        <br>
+        <section class="mat-typography">
+          <h1>Informations générales</h1><br>
+        </section>
+        <mat-form-field class="field-full-width">
+          <mat-select placeholder="Choisir ou ajouter une direction *" [(ngModel)]="marche.DG"
+            formControlName="NomDirection" #NomDirection>
+            <mat-option *ngFor="let direction of directions" (click)="ModificationInfoGeneral(0,direction)"
+              [value]="direction">
+              {{ direction }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+          <mat-select matInput placeholder="Choisir ou ajouter un service *" [(ngModel)]="marche.serv"
+            (click)="fetchServices(NomDirection.value)" formControlName="NomService" #NomService>
+            <mat-option *ngFor="let service of services" (click)="ModificationInfoGeneral(1,service.Nom)"
+              [value]="service.Nom">
+              {{ service.Nom }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div style="width: 100%;text-align: left" [hidden]="IsHidden_1">Contacts ajouté: <span
+            style="color: rgba(24, 56, 170, 0.781);" *ngFor="let item of mailcontacte; index as i;"> {{item}} <mat-icon
+              style="color: crimson;cursor: pointer;" (click)="supp_contact(i)">delete</mat-icon>|
+          </span><br></div>
+        <mat-form-field class="field-full-width">
+          <mat-select matInput placeholder="Choisir un contact dans la liste *" [(ngModel)]="marche.Contacte"
+            formControlName="Contacte" (click)="fetchContactes(NomService.value)" aria-label="Number" #Contacte>
+            <mat-option *ngFor="let contact of contacts" [value]="contact.Email">
+              {{ contact.Nom }} {{ contact.Prenom }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-button style="color: #ff4081" (click)="addcont(Contacte.value)">
+          <mat-icon>add_circle</mat-icon>
+        </button>
+        <button mat-button (click)="onSelect()" style="width: 41%;">
+          <b><span style="color: #ff4081; margin-right: 5%;">OU</span></b>
+          <mat-icon>add</mat-icon> Ajouter nouveau contact
+        </button>
+        <div class="dropdown-content" [hidden]="IsHidden">
+          <form [formGroup]="contactForm" class="contact-form">
+            <mat-form-field class="field-full-width">
+              <input matInput placeholder="Nom du contact" type="text" formControlName="NomCont" #NomCont>
+            </mat-form-field>
+
+            <mat-form-field class="field-full-width">
+              <input matInput placeholder="Prenom du contact" type="text" formControlName="PrenomCont" #PrenomCont>
+            </mat-form-field>
+
+            <mat-form-field class="field-full-width">
+              <input matInput placeholder="Email du contact" type="email" formControlName="EmailCont" #EmailCont>
+            </mat-form-field>
+            <button mat-raised-button class="field-full-width" [disabled]="contactForm.pristine || contactForm.invalid"
+              (click)="creerContact(NomDirection.value,NomService.value,NomCont.value,PrenomCont.value,EmailCont.value);Contacte.value=EmailCont.value;NomCont.value='';PrenomCont.value='';EmailCont.value=''"
+              color="primary">Ajouter</button>
+          </form>
+        </div>
+        <mat-form-field class="field-full-width">
+          <input matInput placeholder="Objet *" (input)="ModificationInfoGeneral(2,$event.target.value)" type="text"
+            formControlName="Objet" [value]="marche.objet" #Objet>
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+          <mat-select placeholder="Nature du marché *" formControlName="Nature" [(ngModel)]="marche.Nature" #Nature>
+            <mat-option value="Fournitures" (click)="ModificationInfoGeneral(3,'Fournitures')">Fournitures</mat-option>
+            <mat-option value="Service" (click)="ModificationInfoGeneral(3,'Service')">Service</mat-option>
+            <mat-option value="Travaux" (click)="ModificationInfoGeneral(3,'Travaux')">Travaux</mat-option>
+          </mat-select>
+
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+          <mat-select placeholder="Type de procédure *" formControlName="TypeProcess" [(ngModel)]="marche.Type_process"
+            #TypeProcess>
+            <mat-option value="Adapté" (click)="ModificationInfoGeneral(4,'Adapté')">Adapté</mat-option>
+            <mat-option value="Apple d'offres" (click)="ModificationInfoGeneral(4,'Apple d\'offres')">Apple d'offres
+            </mat-option>
+            <mat-option value="Dialogue compétitif" (click)="ModificationInfoGeneral(4,'Dialogue compétitif')">Dialogue
+              compétitif</mat-option>
+            <mat-option value="Procédure concurrentielle avec négociation"
+              (click)="ModificationInfoGeneral(4,'Procédure concurrentielle avec négociation')">Procédure
+              concurrentielle avec négociation
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+          <mat-select placeholder="Forme du marché *" formControlName="FormatProcess"
+            [(ngModel)]="marche.Format_process" #FormatProcess>
+            <mat-option value="Accord cadre" (click)="ModificationInfoGeneral(5,'Accord cadre')">Accord cadre
+            </mat-option>
+            <mat-option value="Marché ordinaire" (click)="ModificationInfoGeneral(5,'Marché ordinaire')">Marché
+              ordinaire</mat-option>
+            <mat-option value="Tranches optionnelles" (click)="ModificationInfoGeneral(5,'Tranches optionnelles')">
+              Tranches optionnelles</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div style="color:darkgoldenrod; text-align: right;;width: 98%;font-size: 12px;"
+          *ngIf="alert_montant_3 && marche.Format_process!='Accord cadre'">
+          <mat-icon style="font-size: 14px;">warning</mat-icon> ce montant dois être supprieur a {{montant_dispo-1}} €
+          (HT)
+        </div>
+        <mat-form-field class="field-full-width">
+          <mat-select placeholder="Type de marché *" [(ngModel)]="marche.Type_Marche" formControlName="TypeMarche"
+            #TypeMarche>
+            <mat-option value="Ferme" (click)="ModificationInfoGeneral(6,'Ferme')">Ferme</mat-option>
+            <mat-option value="Reconduction expresse" (click)="ModificationInfoGeneral(6,'Reconduction expresse')">
+              Reconduction expresse</mat-option>
+            <mat-option value="reconduction tacite" (click)="ModificationInfoGeneral(6,'Reconduction tacite')">
+              Reconduction tacite</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="field-full-width" *ngIf="marche.Format_process=='Accord cadre'">
+          <input matInput placeholder="Nombre de reconduction maximal" type="number" [value]="marche.Nbr_reconduction"
+            formControlName="Nbr_rec" min="1"
+            (input)="ModificationInfoGeneral(7,$event.target.value);Montantglobal($event.target.value,5)" max="50"
+            value="0" #Nbr_rec>
+        </mat-form-field>
+
+        <div style="color:darkgoldenrod; text-align: right;width: 98%;font-size: 12px;"
+          *ngIf="alert_montant_1 &&marche.Format_process=='Accord cadre'">
+          <mat-icon style="font-size: 14px;">warning</mat-icon> Montant maximal initiale € (HT) dois être supperieur au
+          Montant minimum initiale € (HT) et dois être supprieur a {{montant_dispo-1}} € (HT)
+        </div>
+        <mat-form-field class="field-full-width" *ngIf="marche.Format_process=='Accord cadre'">
+          <input matInput placeholder="Montant minimum initiale € (HT)" (input)="Montantglobal($event.target.value,0)"
+            type="number" formControlName="MontantMin_HT_ini" min="100" [value]="marche.Montant_Min_HT_ini" #MontantMin_HT_ini>
+        </mat-form-field>
+        <mat-form-field class="field-full-width" *ngIf="marche.Format_process=='Accord cadre'">
+          <input matInput placeholder="Montant maximal initiale € (HT)" type="number" [value]="marche.Montant_Max_HT_ini"
+            (input)="Montantglobal($event.target.value,1)" formControlName="MontantMax_HT_ini" min="100" [value]="marche.Montant_Max_HT_ini"
+            #MontantMax_HT_ini>
+        </mat-form-field>
+
+        <mat-form-field class="field-full-width" *ngIf="marche.Format_process=='Accord cadre'">
+          <input matInput placeholder="Montant minimum globale € (HT)" type="number"
+            formControlName="MontantMin_HT_glob" style="color:blue" [value]="marche.Montant_Min_HT_glob" #MontantMin_HT_glob>
+        </mat-form-field>
+        <mat-form-field class="field-full-width" *ngIf="marche.Format_process=='Accord cadre'">
+          <input matInput placeholder="Montant maximal globale € (HT)" type="number" [value]="marche.Montant_Max_HT_glob"
+            formControlName="MontantMax_HT_glob" style="color:blue" #MontantMax_HT_glob>
+        </mat-form-field>
+        <div style="color:darkgoldenrod; text-align: right;width: 98%;font-size: 12px;"
+          *ngIf="alert_montant_2 && marche.Format_process=='Accord cadre'">
+          <mat-icon style="font-size: 14px;">warning</mat-icon> Montant maximal initiale € (TTC) dois être supperieur au
+          Montant minimum initiale € (TTC)
+        </div>
+        <mat-form-field class="field-full-width" *ngIf="marche.Format_process=='Accord cadre'">
+          <input matInput placeholder="Montant minimum initiale € (TTC)" (input)="Montantglobal($event.target.value,2)"
+            type="number" formControlName="MontantMin_TTC_ini" min="100" [value]="marche.Montant_Min_TTC_ini" #MontantMin_HT_ini>
+        </mat-form-field>
+
+        <mat-form-field class="field-full-width" *ngIf="marche.Format_process=='Accord cadre'">
+          <input matInput placeholder="Montant maximal initiale € (TTC)" (input)="Montantglobal($event.target.value,3)"
+            type="number" formControlName="MontantMax_TTC_ini" min="100" [value]="marche.Montant_Max_TTC_ini" #MontantMax_HT_ini>
+        </mat-form-field>
+        <mat-form-field class="field-full-width" *ngIf="marche.Format_process!='Accord cadre'">
+          <input matInput placeholder="Montant forfetaire € (HT)" (input)="Montantglobal($event.target.value,6)"
+            type="number" formControlName="MontantMax_HT_Forfetaire" min="100" value="0" #MontantMax_HT_Forfetaire>
+        </mat-form-field>
+
+        <mat-form-field class="field-full-width" *ngIf="marche.Format_process=='Accord cadre'">
+          <input matInput placeholder="Montant minimum globale € (TTC)" type="number" style="color:blue"
+            formControlName="MontantMin_TTC_glob" [value]="marche.Montant_Min_TTC_glob" #MontantMin_TTC_glob>
+        </mat-form-field>
+        <mat-form-field class="field-full-width" *ngIf="marche.Format_process=='Accord cadre'">
+          <input matInput placeholder="Montant maximal globale € (TTC)" type="number" style="color:blue"
+            formControlName="MontantMax_TTC_glob" [value]="marche.Montant_Max_TTC_glob" #MontantMax_TTC_glob>
+        </mat-form-field>
+
+        <mat-form-field style="width: 32%;margin-right: 1.33%">
+          <input matInput placeholder="Durée initiale du marché (en mois) *" type="number" formControlName="DureInitial"
+            (input)="Montantglobal($event.target.value,4)" min="1" [value]="marche.D_init" #DureInitial>
+        </mat-form-field>
+
+        <mat-form-field style="width: 32%;margin-right: 1.33%">
+          <input matInput placeholder="Durée globale du marché (en mois)" type="number" formControlName="DureGlobal"
+            style="color:blue" [value]="marche.D_tot" #DureGlobal>
+        </mat-form-field>
+        <mat-form-field style="width: 32%;margin-right: 1.33%">
+          <input matInput type="date" placeholder="Date de debut du marché: {{marche.Date_debut}}"
+            formControlName="DateDebut" (input)="Montantglobal($event.target.value,7)"  #DateDebut>
+        </mat-form-field>
+
+        <mat-form-field class="field-full-width" style="width: 100%;">
+          <textarea matInput placeholder="Observation, notes concernant le marché" style="height: 100px;"
+            formControlName="Observation" (input)="ModificationInfoGeneral(8,$event.target.value)" [value]="marche.Observation" #Observation></textarea>
+        </mat-form-field>
+      </form>
+      <br>
+      <table style="font-family: arial, sans-serif;border-collapse: collapse;width: 100%;height: 100%" *ngIf="vu_modif_f3">
+        <tr>
+            <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Nom société</th>
+            <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Nom contacte</th>
+            <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Email</th>
+            <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Adresse</th>
+            <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Telephone</th>
+            <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Montant mis à disposition</th>
+            <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">type</th>
+        </tr>
+        <tr *ngFor="let titul of marche.Titulaire; let i=index">
+          <td style="border: 1px solid black;text-align: left;padding: 8px;"><input type="text" (input)="ModificationInfoTitulaire(0,$event.target.value,i)" value="{{titul.Nom}}" style="width: 100%"/></td>
+          <td style="border: 1px solid black;text-align: left;padding: 8px;"><input type="text" (input)="ModificationInfoTitulaire(1,$event.target.value,i)" value="{{titul.Mail.split('$$')[1]}}" style="width: 100%"/></td>
+          <td style="border: 1px solid black;text-align: left;padding: 8px;"><input type="email" (input)="ModificationInfoTitulaire(2,$event.target.value,i)" value="{{titul.Mail.split('$$')[0]}}" style="width: 100%"/></td>
+          <td style="border: 1px solid black;text-align: left;padding: 8px;"><input type="text" (input)="ModificationInfoTitulaire(4,$event.target.value,i)" value="{{titul.Adresse}}" style="width: 100%"/></td>
+          <td style="border: 1px solid black;text-align: left;padding: 8px;"><input type="tel" (input)="ModificationInfoTitulaire(3,$event.target.value,i)" value="{{titul.Mail.split('$$')[2]}}" style="width: 100%"/></td>
+          <td style="border: 1px solid black;text-align: left;padding: 8px;"><input type="number" min="0" (input)="ModificationInfoTitulaire(5,$event.target.value,i)"  value="{{titul.Montant}}" style="width: 80%"/>€(HT)</td>
+          <td style="border: 1px solid black;text-align: left;padding: 8px;" *ngIf="i==0">Titulaire</td>
+          <td style="border: 1px solid black;text-align: left;padding: 8px;" *ngIf="i!=0">(co)traitant</td>
+          <td style="border: 1px solid black;text-align: left;padding: 8px;" *ngIf="i!=0" ><button mat-button style="color: red" (click)="delete_traitant(i)"><mat-icon>delete</mat-icon></button></td>
+        </tr>
+      </table>
+      <table style="font-family: arial, sans-serif;border-collapse: collapse;width: 100%;height: 100%" *ngIf="vu_modif_f4">
+          <tr>
+              <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Nom du fichier</th>
+          </tr>
+          <tr *ngFor="let titul of marche.Piece_Jointe; let i=index">
+              <td style="border: 1px solid black;text-align: left;padding: 8px;">{{titul.nom.substring(26)}}</td>
+              <td style="border: 1px solid black;text-align: left;padding: 8px;"><button mat-button style="color: red" (click)="delete_pj(i)"><mat-icon>delete</mat-icon></button></td>
+          </tr>    
+      </table>
+      <div *ngIf="vu_modif_f4" class="create-form">
+        <br>
+        <!--Gestion des pièces jointes-->
+        <section class="mat-typography">
+          <h1 style="text-align: center">Rattacher des fichiers au marché</h1><br>
+        </section>
+        <ngfFormData [files]="files" postName="file" [(FormData)]="sendableFormData"></ngfFormData>
+        <ngfUploadStatus [(percent)]="progress" [httpEvent]="httpEvent"></ngfUploadStatus>
+        <div class="inline-block">
+          <div ngfDrop [(validDrag)]="baseDropValid" (fileOver)="hasBaseDropZoneOver=$event" selectable="1" multiple="1"
+            [(files)]="files" accept="*" [maxSize]="maxSize" [(dragFiles)]="dragFiles" [(lastInvalids)]="lastInvalids"
+            class="well my-drop-zone" [class.invalid-drag]="baseDropValid===false" [class.valid-drag]="baseDropValid"
+            (filesChange)="lastFileAt=getDate()"><br>
+            Selectionner ou glisser le fichier ici
+          </div>
+        </div>
+        <br>
+        <div>
+          <div class="aprs_up" *ngIf="files.length>0">
+            <h3 style="text-align: center">{{ files.length }} Fichier(s) en attente</h3><br>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nom</th>
+                  <th>Taille</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of files;let i=index">
+                  <td style="text-align: left">
+                    <strong>{{ item.name }}</strong>
+                  </td>
+  
+                  <td nowrap>
+                    {{ item.type }}
+                  </td>
+  
+                  <td nowrap>
+                    {{ item.size/1024/1024 | number:'.2' }} MB
+                  </td>
+  
+                  <td nowrap>
+                    <button mat-raised-button color="accent" type="button" (click)="files.splice(i,1)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+  
+            <div>
+              <div>
+                <br>
+                Etat du chargement:
+                <mat-progress-bar class="prog" mode="determinate" value="{{progress}}"></mat-progress-bar>
+              </div>
+              <mat-icon *ngIf="progress==100">done</mat-icon>
+  
+              <button type="button" mat-raised-button color="primary" (click)="AjouterFichier(files)"
+                [disabled]="!files.length">
+                <mat-icon>add_shopping_cart</mat-icon> Enregistrer le marché
+              </button> &nbsp; &nbsp;
+              <button type="button" mat-raised-button color="accent" (click)="files.length=0" [disabled]="!files.length">
+                <mat-icon>delete_sweep</mat-icon> Tous supprimer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="vu_titulaire" style="width: 80%;margin: auto">
+      <form [formGroup]="titulaireForm">
+        <h2 style="text-align: center">Nouveau (co)titulaire(s)</h2>
+        <mat-form-field class="field-full-width">
+          <input matInput placeholder="Nom (co) traitant(s)" type="text" formControlName="NomTit" #NomTit>
+        </mat-form-field>
+
+        <mat-form-field class="field-full-width">
+          <input matInput placeholder="Adresse (co) traitant(s)" type="text" formControlName="Adresse" #Adresse>
+        </mat-form-field>
+
+        <mat-form-field class="field-full-width">
+          <input matInput placeholder="Nom du contact" type="text" formControlName="NomContact" #NomContact>
+        </mat-form-field>
+
+        <mat-form-field class="field-full-width">
+          <input matInput placeholder="Email de contact" type="email" formControlName="Mail" #Mail>
+        </mat-form-field>
+
+        <mat-form-field class="field-full-width">
+          <input matInput placeholder="Telephone" type="tel" pattern="[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}"
+            formControlName="Telephone" #Telephone>
+        </mat-form-field>
+
+        <mat-form-field class="field-full-width">
+          <input matInput placeholder="Montant mis à disposition € (HT)" type="number" min="0" value="0"
+            formControlName="Montant" #Montant>
+        </mat-form-field>
+        <div style="width: 10%;margin: auto">
+          <button mat-raised-button [disabled]="titulaireForm.pristine || titulaireForm.invalid"
+            (click)="crerTitulaire(NomTit.value,Adresse.value,Mail.value,Montant.value,NomContact.value,Telephone.value)"
+            color="primary">Ajouter
+            Titulaire </button>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="vu_avenant" style="width: 80%;margin: auto">
+      <form [formGroup]="avenantForm">
+        <h2 style="text-align: center">Nouvel avenant</h2>
+        <div style="color:aqua; text-align: left;width: 100%;font-size: 12px;">
+          <mat-icon style="font-size: 14px;">info</mat-icon> dans le cas d'une réduction du montant ou de la durée
+          (mois) ajouter le signe
+          <span style="color: brown; font-size: 15px"><b>(-)</b></span> avant le montant ou de la durée
+          (mois).&nbsp;&nbsp; Le montant ou de la durée (mois) renseigné seras additionné ou soustrait au <b>montant max
+            global HT</b> du marché
+        </div>
+        <mat-form-field class="field-full-width">
+          <input matInput placeholder="Objet" type="text" formControlName="Objet" #Objet>
+        </mat-form-field>
+        <mat-form-field style="width: 24%;margin-right: 2%;">
+          <input matInput placeholder="Montant (HT)€" type="number" formControlName="Montant" #Montant>
+        </mat-form-field>
+        <mat-form-field style="width: 24%">
+          <input matInput placeholder="Durée d'une reconduction (Mois)" type="number" formControlName="Dure" #Dure>
+        </mat-form-field>
+        <mat-form-field class="field-full-width" style="width: 100%;">
+          <textarea matInput placeholder="Resumer, en quelque mot l'avenant" style="height: 100px;"
+            formControlName="Resume" #Resume></textarea>
+        </mat-form-field>
+        <div style="width: 10%;margin: auto">
+          <button mat-raised-button [disabled]="avenantForm.pristine || avenantForm.invalid"
+            (click)="Avenant(Objet.value,Montant.value,Resume.value,Dure.value);" color="primary">Ajouter
+            l'avenant </button>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="vu_option && (marche['Tranche_optionnel'].length+1)<3" style="width: 80%;margin: auto">
+      <form [formGroup]="avenantForm">
+        <h2 style="text-align: center">Tranche optionnel {{(marche['Tranche_optionnel'].length+1)}}</h2>
+        <mat-form-field class="field-full-width">
+          <input matInput placeholder="Condition d'execution" type="text" formControlName="Objet" #Objet_1>
+        </mat-form-field>
+
+        <mat-form-field class="field-full-width">
+          <input matInput placeholder="Montant (HT)€" type="number" min="0" value="0" formControlName="Montant"
+            #Montant_1>
+        </mat-form-field>
+        <mat-form-field class="field-full-width" style="width: 100%;">
+          <textarea matInput placeholder="Observation et remarque" style="height: 100px;" formControlName="Resume"
+            #Resume_1></textarea>
+        </mat-form-field>
+        <div style="width: 10%;margin: auto">
+          <button mat-raised-button [disabled]="avenantForm.pristine || avenantForm.invalid"
+            (click)="optionnel_act(Objet_1.value,Montant_1.value,Resume_1.value);" color="primary">Ajouter
+            l'avenant </button>
+        </div>
+      </form>
+    </div>
+  </mat-card>
+</div>

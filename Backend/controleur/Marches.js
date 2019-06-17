@@ -20,10 +20,13 @@ module.exports = {
             if (marche.length != 0) {
                 nouveuaMarche.NumMarche = (nouveuaMarche.An != marche[0].An) ? 1 : marche[0].NumMarche + 1//verification du changement d'année
             }
-            nouveuaMarche.save(function
-                (err) {
-                if (err)
-                    throw err
+            Marches.findOne({DateNotific:nouveuaMarche.DateNotific,objet:nouveuaMarche.objet,serv:nouveuaMarche.serv},function(err,marche){
+                if(marche==null)
+                nouveuaMarche.save(function
+                    (err) {
+                    if (err)
+                        throw err
+                })
             })
         }).sort({ _id: -1 })
 
@@ -125,6 +128,45 @@ module.exports = {
                 throw err;
             res.json(marche)
         }).sort({ _id: -1 })
+    },
+    statistiques: function (req, res) {
+        Marches.find({}, function (err, marche) {
+            res.json(stat_finances(marche, parseInt(req.params.option)))
+        })
+    }
+
+}
+function stat_finances(data, option) {
+    var Ret = { Label: [], Montant_min: [], Montant_max: [] }
+    if (option == 0) {
+        for (var i = 0; i < data.length; i++) {
+            if (Ret.Label.includes(data[i].DG)) {
+                var j = Ret.Label.indexOf(data[i].DG)
+                Ret.Montant_min[j] += data[i].Montant_Min_HT_glob
+                Ret.Montant_max[j] += data[i].Montant_Max_HT_glob
+            }
+            else {
+                Ret.Label.push(data[i].DG)
+                Ret.Montant_min.push(data[i].Montant_Min_HT_glob)
+                Ret.Montant_max.push(data[i].Montant_Max_HT_glob)
+            }
+        }
+        return Ret
+    }
+    if(option==1){
+        for (var i = 0; i < data.length; i++) {
+            if (Ret.Label.includes(data[i].serv)) {
+                var j = Ret.Label.indexOf(data[i].serv)
+                Ret.Montant_min[j] += data[i].Montant_Min_HT_glob
+                Ret.Montant_max[j] += data[i].Montant_Max_HT_glob
+            }
+            else {
+                Ret.Label.push(data[i].serv)
+                Ret.Montant_min.push(data[i].Montant_Min_HT_glob)
+                Ret.Montant_max.push(data[i].Montant_Max_HT_glob)
+            }
+        }
+        return Ret
     }
 }
 function traiteur_upload(result) {
@@ -143,11 +185,14 @@ function traiteur_upload(result) {
             marche = new Marches();
             if (typeof data[j].C != 'undefined') {
                 marche.objet = data[j].D
+                marche.Date_debut=data[j].L+"$$"
+                marche.Datecreation=getDate()
                 marche.An = data[j].C.substring(0, 2)
                 marche.NumMarche = data[j].C.substring(data[j].C.length - 3, data[j].C.length)
                 marche.Total_relance = 0
                 marche.DateNotific = CreerDateNotification(formatedate(data[j].AC), data[j].M)
                 marche.Nature = ""
+                marche.agent_enregist=""
                 //gestion type Process et format process
                 if (typeof data[j].G != 'undefined') { marche.Type_process = "MAPA"; marche.Format_process = "RECONDUCTIBLE"; }
                 if (typeof data[j].H != 'undefined') { marche.Type_process = "MAPA"; marche.Format_process = "FERME" }
@@ -155,9 +200,14 @@ function traiteur_upload(result) {
                 if (typeof data[j].J != 'undefined') { marche.Type_process = "AO"; marche.Format_process = "FERME" }
                 if (typeof data[j].K != 'undefined') { marche.Type_process = "CONCESSION"; marche.Format_process = "FERME" }
                 marche.Type_Marche = ""
-                marche.Montant_Min = 0
-                marche.Montant_Max = 0
-                marche.MontantConsome = (typeof data[j].F == 'undefined' || typeof data[j].F == 'string') ? 0 : data[j].F
+                marche.Montant_Min_HT_ini = 0
+                marche.Montant_Max_HT_ini = 0
+                marche.Montant_Max_TTC_ini = 0
+                marche.Montant_Min_TTC_ini = 0
+                marche.Montant_Min_HT_glob = 0
+                marche.Montant_Min_TTC_glob = 0
+                marche.Montant_Max_TTC_glob = 0
+                marche.Montant_Max_HT_glob = (typeof data[j].F == 'undefined' || typeof data[j].F == 'string') ? 0 : data[j].F
                 marche.Nbr_reconduction = (typeof data[j].N == 'undefined' || typeof data[j].N == 'string') ? 0 : data[j].N
                 marche.Observation = (typeof data[j].AG == 'undefined') ? '' : data[j].AG
                 marche.Date_Cloture_ini = formatedate(data[j].P)
@@ -167,19 +217,10 @@ function traiteur_upload(result) {
                 marche.serv = data[j].B
                 marche.D_init = (typeof data[j].M == 'undefined') ? 0 : data[j].M
                 marche.D_tot = (typeof data[j].O == 'undefined') ? 0 : data[j].O
-                marche.Titulaire = {
-                    Nom: "Non renseigné",
-                    Adresse_1: "",
-                    Adresse_2: "Non renseigné",
-                    CP: "",
-                    Ville: "",
-                    Tel: "",
-                    Contacte: "",
-                    Mail: "",
-                }
-                marche.SousTraitants = []
+                marche.Titulaire = []
                 marche.Piece_Jointe = []
                 marche.historique = []
+                marche.Tranche_optionnel=[]
                 marche.save(function
                     (err) {
                     if (err)
@@ -208,3 +249,8 @@ function CreerDateNotification(dte, nb_mois) {
     if (day.length < 2) day = '0' + day;
     return day + "/" + month + "/" + year;
 }
+function   getDate() {
+    var event = new Date();
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    return event.toLocaleDateString('fr-FR', options)
+  }

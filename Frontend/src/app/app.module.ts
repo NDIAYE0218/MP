@@ -24,8 +24,12 @@ import { UtilisateursComponent } from './compoments/utilisateurs/utilisateurs.co
 import { ForgetPasswordComponent } from './compoments/forget-password/forget-password.component';
 import { CookieService } from "angular2-cookie/services/cookies.service";
 import { ReconductionComponent } from './compoments/reconduction/reconduction.component';
+import { StatistiquesComponent } from './compoments/statistiques/statistiques.component';
+import { ChartsModule } from 'ng2-charts';
+import { AvenantComponent } from './compoments/avenant/avenant.component';
 const routes: Routes = [
   { path: 'marches/:id', component: MarcheComponent },
+  { path: 'marches/avenant/:id', component: AvenantComponent },
   { path: 'direction/ajouter', component: AjouterDirectionComponent },
   { path: 'marche/ajouter', component: AjouterMarcheComponent },
   { path: 'marche/ajouter/csv', component: CsvMarcheComponent },
@@ -35,6 +39,7 @@ const routes: Routes = [
   { path: 'marches', component: MarchesComponent },
   { path: 'Connexion', component: ConnexionComponent },
   { path: 'Marches/reconduire/:rep/:_id', component: ReconductionComponent },
+  { path: 'Statistiques/:type/:option', component: StatistiquesComponent },
   { path: '', redirectTo: 'Connexion', pathMatch: 'full' }
 ];
 
@@ -64,6 +69,8 @@ display: {
     UtilisateursComponent,
     ForgetPasswordComponent,
     ReconductionComponent,
+    StatistiquesComponent,
+    AvenantComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,7 +99,8 @@ display: {
     MatExpansionModule,
     FileUploadModule,
     MatProgressBarModule,
-    ngfModule
+    ngfModule,
+    ChartsModule
   ],
   providers: [CookieService,DirectionService,MarcheService,UserService,{provide: MAT_DATE_LOCALE, useValue: 'fr'},{ provide: MAT_DATE_FORMATS, useValue: DateFormat }],
   bootstrap: [AppComponent]

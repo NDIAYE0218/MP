@@ -9,11 +9,11 @@ export class MarcheService {
   ns_pre=0 //nbre de semaine a soustraire de la date de cloture
   constructor(private http: HttpClient) { }
 
+  Statistiques(option){
+    return this.http.get(`${this.uri}/Statistiques/`+option)
+  }
   CreerMarcher(Marche) {
-    console.log(Marche)
-    return this.http.post(`${this.uri}/Marche`, Marche).subscribe(
-      error => console.log('oops', error)
-    );
+    return this.http.post(`${this.uri}/Marche`, Marche);
   }
 
   getMarches() {
@@ -30,16 +30,12 @@ export class MarcheService {
     return this.http.delete(`${this.uri}/Marches/` + an + `/` + num)
   }
   updateMarches(historique, id) {
-    return this.http.put(`${this.uri}/Marche/` + id, historique).subscribe(
-      error => console.log('oops', error)
-    );
+    return this.http.put(`${this.uri}/Marche/` + id, historique).subscribe();
   }
   reconductionExpresse(_id){
     return this.http.get(`${this.uri}/Marches/reconduire/` + _id)
   }
   generateur_date(dte, nb_mois, nbr_rec) {//dte représente la date du debut du marchéet nb_mois le nombre de mois (duré initiale du marché), et le nombre de reconduction pour estimer la valeur d'une periode
-    var format = dte.split('/');
-    dte = format[1] + "/" + format[0] + "/" + format[2]
     //calcule de la date de cloture
     var dateclo = new Date(dte)
     dateclo.setFullYear(dateclo.getFullYear() + (nb_mois % 12))//nbre d'année de la duré plus 
@@ -53,15 +49,12 @@ export class MarcheService {
     //fin
     /**
      * REGLE DE CALCUL DE LA DATE DE NOTIFICATION
-     * Première alerte 6mois avan la date de cloture  si pas de reconduction et duré marché supperieur a 6 mois
-     * Première alerte 1 mois avan la date de cloture si pas de reconduction et duré marché compris entre 6 et 1 mois
-     * Première alerte 2 semaines avan la date de cloture si pas de reconduction et duré marché égal a un mois
-     * Première alerte 4mois avan la date de cloture  si reconduction et duré d'une reconduction supperieur a 4 mois
-     * Première alerte 1 mois avan la date de cloture si reconduction et duré  d'une reconduction compris entre 4 et 1 mois
-     * Première alerte 2 semaines avan la date de cloture si reconduction et duré  d'une reconduction &gal a un mois
+     * Première alerte 6mois avan la date de cloture  si nombre de reconduction est egal a 0
+     * Première alerte 4 mois avan la date de cloture si nombre de reconduction est supperieur a 0
+     * sinon un moi avan la date de cloture
      **/
-    var dure_rec = nb_mois / nbr_rec
-    this.nb_pre = (nbr_rec == 0 && nb_mois > 6) ? 6 : (nbr_rec > 0) ? ((dure_rec > 4)? 4 + (dure_rec * (nbr_rec - 1)): (dure_rec < 4 && dure_rec > 1) ? 1 + (dure_rec * (nbr_rec - 1)) : (dure_rec * (nbr_rec - 1))) : (nbr_rec == 0 && nb_mois < 6 && nb_mois > 1) ? 1 : 0
+    var dure_rec = nb_mois
+    this.nb_pre = (nb_mois>6 && nbr_rec==1)?6:(nb_mois>6 && nbr_rec>1)?4:1
     this.ns_pre=(nb_mois ==1)? 14:0
     dateclo.setMonth(dateclo.getMonth()-this.nb_pre) //calcule mois de notification
     dateclo.setDate(dateclo.getDate()-this.ns_pre)

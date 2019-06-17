@@ -1,0 +1,24 @@
+<div>
+  <br>
+  <h2 style="text-align: center">Statistiques {{type}} par {{option}}</h2>
+  <br>
+  <div style="width: 50%;margin: auto"><button mat-raised-button color="warn" (click)="change_vue(0)">
+      <mat-icon>bar_chart</mat-icon>Vue en histogramme
+    </button>&nbsp;&nbsp;<button mat-raised-button color="warn" (click)="change_vue(1)">
+      <mat-icon>pie_chart</mat-icon>Vue en diagramme circulaire
+    </button></div>
+  <br>
+  <div [hidden]="chart_vu" *ngIf="!chart_vu" style="width: 70%;margin: auto"><canvas  baseChart [datasets]="data_histo"
+      [labels]="label_histo" [options]="barChartOptions" legend="false" chartType="bar"  [colors]="pieChartColors">
+    </canvas></div>
+  <div [hidden]="pie_vu" *ngIf="!pie_vu" style="width: 50%;margin: auto;float:left;">
+    <h3 style="text-align: center">Montant minimum global (HT) €</h3>
+    <canvas baseChart [data]="data_pie_min" [labels]="label_pie" chartType="pie"  [colors]="pieChartColors">
+    </canvas>
+  </div>
+  <div [hidden]="pie_vu" *ngIf="!pie_vu" style="width: 50%;margin: auto;float:left;">
+    <h3 style="text-align: center">Montant miaximum global (HT) €</h3>
+    <canvas  baseChart [data]="data_pie_max" [labels]="label_pie" chartType="pie"  [colors]="pieChartColors">
+    </canvas>
+  </div>
+</div>

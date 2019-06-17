@@ -50,54 +50,60 @@
     <h2>Montants</h2>
     <table>
       <tr>
-        <th>Montant minimum</th>
-        <th>Montant déboursé</th>
-        <th>Montant maximum</th>
+        <th>Seuil minimum</th>
+        <th>Seuil maximum</th>
+        <th>Seuil global (HT)</th>
+        <th>Montant consomé (HT)</th>
+        <th>Solde (HT)</th>
       </tr>
       <tr>
-        <td>{{marche.Montant_Min}}</td>
-        <td><b>{{marche.MontantConsome}}</b></td>
-        <td>{{marche.Montant_Max}}</td>
+        <td>{{marche.Montant_Min_HT_ini}}€(HT)/<b style="color: blue">{{marche.Montant_Min_TTC_ini}}€(TTC)</b></td>
+        <td>{{marche.Montant_Max_HT_ini}}€(HT)/<b style="color: blue">{{marche.Montant_Max_TTC_ini}}€(TTC)</b></td>
+        <td>min: {{marche.Montant_Min_HT_glob}}€ &nbsp;-&nbsp;<b style="color: blue">max: {{marche.Montant_Max_HT_glob}}€</b></td>
+        <td><b>{{calcul_solde(marche)}}€</b>&nbsp;</td>
+        <td><b *ngIf="marche.Montant_Max_HT_glob>0">{{marche.Montant_Max_HT_glob-calcul_solde(marche)}}€</b>&nbsp;<b *ngIf="marche.Montant_Max_HT_glob==0">Pas de maximum</b></td>
       </tr>
     </table>
     <h2>Titulaire et sous traitants</h2>
-    <table>
+    <table style="font-family: arial, sans-serif;border-collapse: collapse;width: 100%;">
       <tr>
-        <th class="tra">Type</th>
-        <th class="tra">entreprise</th>
-        <th class="tra">contact</th>
-        <th class="tra">Email</th>
-        <th class="tra">Adresse</th>
+          <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Nom</th>
+          <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Nom contact</th>
+          <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Email</th>
+          <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Téléphone</th>
+          <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Adresse</th>
+          <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Montant mis à disposition</th>
+          <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Type</th>
       </tr>
-      <tr>
-        <td>Titulaire</td>
-        <td>{{marche.Titulaire.Nom}}</td>
-        <td>{{marche.Titulaire.Contacte}}</td>
-        <td>{{marche.Titulaire.Mail}}</td>
-        <td>{{marche.Titulaire.Adresse_1}} {{marche.Titulaire.Adresse_2}}
-          {{marche.Titulaire.Ville}}({{marche.Titulaire.CP}})</td>
-      </tr>
-      <tr *ngFor="let trai of marche.SousTraitants;">
-        <td>Sous traitant</td>
-        <td>{{trai.Nom}}</td>
-        <td>{{trai.Contacte}}</td>
-        <td>{{trai.Mail}}</td>
-        <td>{{trai.Adresse_1}} {{trai.Adresse_2}} {{trai.Ville}}({{trai.CP}})</td>
+      <tr *ngFor="let titul of marche.Titulaire; let i=index">
+        <td style="border: 1px solid black;text-align: left;padding: 8px;">{{titul.Nom}}&nbsp;</td>
+        <td style="border: 1px solid black;text-align: left;padding: 8px;">{{titul.Mail.split('$$')[1]}}&nbsp;</td>
+        <td style="border: 1px solid black;text-align: left;padding: 8px;">{{titul.Mail.split('$$')[0]}}&nbsp;</td>
+        <td style="border: 1px solid black;text-align: left;padding: 8px;">{{titul.Mail.split('$$')[2]}}&nbsp;</td>
+        <td style="border: 1px solid black;text-align: left;padding: 8px;">{{titul.Adresse}}&nbsp;</td>
+        <td style="border: 1px solid black;text-align: left;padding: 8px;">{{titul.Montant}}€(TTC)&nbsp;</td>
+        <td style="border: 1px solid black;text-align: left;padding: 8px;" *ngIf="i==0">Titulaire&nbsp;</td>
+        <td style="border: 1px solid black;text-align: left;padding: 8px;" *ngIf="i!=0">(co)traitant(s)&nbsp;</td>
+        <td style="border: 1px solid black;text-align: left;padding: 8px;" *ngIf="droit>=2"><button mat-button color="accent" (click)="liste_sous_traitant(titul)" *ngIf="titul.SousTraitants.length>0"><mat-icon>list</mat-icon>liste sous-tratant</button><button mat-button color="warn" (click)="update_co_traitant(titul)"><mat-icon>create</mat-icon>Modifier montant</button> <button mat-button color="primary" (click)="add_sous_traitant(titul)"><mat-icon>add</mat-icon>Ajouter sous-traitant</button></td>
       </tr>
     </table>
     <br>
     <h2>Dates</h2>
     <table>
       <tr>
+        <th class="tra">Date de alerte</th>
         <th class="tra">Date de notification</th>
+        <th class="tra">Date de création</th>
         <th class="tra">Date de cloture</th>
         <th class="tra">Nombre de redirections</th>
         <th class="tra">Durée initiale</th>
         <th class="tra">Durée totale</th>
       </tr>
       <tr>
-        <td>{{marche.DateNotific}}</td>
-        <td>{{marche.D_clot}}</td>
+        <td>{{getDate(marche.DateNotific)}}</td>
+        <td>{{getDate(marche.Date_debut)}}</td>
+        <td>{{marche.Datecreation}}</td>
+        <td><b>{{getDate(marche.D_clot)}}</b></td>
         <td>{{marche.Nbr_reconduction}}</td>
         <td>{{marche.D_init}}</td>
         <td>{{marche.D_tot}}</td>
@@ -118,30 +124,45 @@
       </tr>
     </table>
     <br>
-    <button mat-button color="primary" *ngIf="marche.historique.length>0" (click)="histo_vue()">Voir l'historique des
+    <button mat-button color="primary" *ngIf="marche.Tranche_optionnel.length>0" (click)="histo_vue(0)">Voir les tranches optionnels</button>
+    <div [hidden]="tranche_op">
+      <table>
+        <tr>
+          <th>Condition</th>
+          <th>Observation</th>
+          <th>Montant</th>
+        </tr>
+        <tr *ngFor="let his of marche.Tranche_optionnel;">
+          <td>{{his.condition}}</td>
+          <td>{{his.Observation}}</td>
+          <td>{{his.Montant}}</td>
+        </tr>
+      </table>
+    </div>
+    <br>
+    <button mat-button color="primary" *ngIf="marche.historique.length>0" (click)="histo_vue()">Voir les avenant
       modifications</button>
     <div [hidden]="histo">
       <table>
         <tr>
-          <th>Numero modification</th>
-          <th>Date</th>
+          <th>Objet</th>
           <th>Montant</th>
-          <th>Prestation</th>
+          <th>Resume</th>
+          <th>Mois</th>
         </tr>
         <tr *ngFor="let his of marche.historique;">
-          <td>{{his.numModif}}</td>
-          <td>{{his.date}}</td>
+          <td>{{his.Objet}}</td>
           <td>{{his.Montant}}</td>
-          <td>{{his.Prestation}}</td>
+          <td>{{his.Resume}}</td>
+          <td>{{his.date}}</td> <!--Changer pour mois -->
         </tr>
       </table>
     </div>
     <br>
     <button type="submit" (click)="Telecharger(marche)" class="field-full-width"
-       mat-raised-button color="primary">Telecharger format pdf</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       mat-raised-button color="primary">Telecharger format pdf</button>&nbsp;&nbsp;
     <button mat-raised-button color="accent" class="field-full-width" routerLink="/marches">Retour</button>
   </mat-card>
-
   <div class="titre">
   </div>
   <br>

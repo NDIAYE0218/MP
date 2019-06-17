@@ -18,7 +18,7 @@
     </mat-menu>
     <mat-menu #stats="matMenu">
       <button mat-menu-item [matMenuTriggerFor]="finances"> <mat-icon>euro_symbol</mat-icon>Statistiques financiers</button>
-      <button mat-menu-item ><mat-icon>bubble_chart</mat-icon>Statistiques Procedures</button>
+      <button mat-menu-item [matMenuTriggerFor]="process" ><mat-icon>bubble_chart</mat-icon>Statistiques Procedures</button>
     </mat-menu>
     <mat-menu #AjoutMarche="matMenu">
       <button mat-menu-item routerLink="/marche/ajouter"><mat-icon>edit</mat-icon>Depuis un formulaire</button>
@@ -26,10 +26,16 @@
     </mat-menu>
 
     <mat-menu #finances="matMenu">
-        <button mat-menu-item><mat-icon>pie_chart</mat-icon>En fonction des Directions</button>
-        <button mat-menu-item><mat-icon>show_chart</mat-icon>En fonction des services</button>
+        <button mat-menu-item routerLink="/Statistiques/financiers/directions"><mat-icon>pie_chart</mat-icon>En fonction des Directions</button>
+        <button mat-menu-item routerLink="/Statistiques/financiers/services"><mat-icon>show_chart</mat-icon>En fonction des services</button>
         <button mat-menu-item><mat-icon>table_chart</mat-icon>Montant total par année</button>
     </mat-menu>
+    <mat-menu #process="matMenu">
+      <button mat-menu-item><mat-icon>view_carousel</mat-icon>En fonction du type de marché</button>
+      <button mat-menu-item><mat-icon>graphic_eq</mat-icon>En fonction de la forme de marché</button>
+      <button mat-menu-item><mat-icon>scatter_plot</mat-icon>En fonction du type de procedure</button>
+      <button mat-menu-item><mat-icon>show_chart</mat-icon>En fonction de la nature du marché</button>
+  </mat-menu>
   </div>
 </mat-toolbar>
 <div>
