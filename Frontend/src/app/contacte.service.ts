@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ContacteService {
-  uri = 'http://localhost:4000';
+  uri = 'http://10.75.87.133:4000';
 
   constructor(private http: HttpClient) { }
   CreateContacte(NomDir,NumServ,Nom,Prenom,Email){

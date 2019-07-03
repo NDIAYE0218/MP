@@ -30,7 +30,7 @@ export class AvenantComponent implements OnInit {
   accept = '*'
   files: File[] = []
   progress: number
-  url = 'http://localhost:4000/Marche/file_marche'
+  url = 'http://10.75.87.133:4000/Marche/file_marche'
   directions = [];
   services = [];
   contacts = [];

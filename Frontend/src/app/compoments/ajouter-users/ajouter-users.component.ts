@@ -36,7 +36,7 @@ export class AjouterUsersComponent implements OnInit {
         Nom: Nom,
         Prenom: Prenom,
         Poste: Poste,
-        Email: Email,
+        Email: Email.toLowerCase(),
         Droit: (typeof Droit == "undefined") ? 0 : parseInt(Droit)
       }
       this.ajoutUser.reset()
@@ -45,7 +45,7 @@ export class AjouterUsersComponent implements OnInit {
           swal({ title: "Erreur", text: "l'utilisateur existe deja", type: "error" })
         else
           {
-            this.userservice.Forget_password({Email:Email},0).subscribe((data:any)=> {console.log(data)})
+            this.userservice.Forget_password({Email:Email.toLowerCase()},0).subscribe((data:any)=> {console.log(data)})
             swal({ title: "Ajout réussis!", text: "l'utilisateur a recu un email lui permettant d'initialiser son compte", type: "success" })
           }
       })

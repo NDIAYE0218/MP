@@ -7,7 +7,7 @@ import {Router} from '@angular/router'
   providedIn: 'root'
 })
 export class UserService {
-  uri = 'http://localhost:4000';
+  uri = 'http://10.75.87.133:4000';
   constructor(private http: HttpClient, private cookieservice: CookieService,private route:Router) { }
   GetAll() {
     return this.http.get(`${this.uri}/Users`)

@@ -22,7 +22,7 @@ export class ConnexionComponent implements OnInit {
   }
   connexion(Login,MDP){
     var recherche={
-      Email:Login,
+      Email:Login.toLowerCase(),
       MDP:MDP
     }
     this.userservice.Connexion(recherche).subscribe((data:any)=>{
@@ -49,7 +49,7 @@ export class ConnexionComponent implements OnInit {
     showLoaderOnConfirm: true,
   }).then((result) => {
     var Email=result.value
-      this.userservice.Forget_password({Email:Email},1).subscribe((data:any)=>{
+      this.userservice.Forget_password({Email:Email.toLowerCase()},1).subscribe((data:any)=>{
         if(data.etat=="inconnue")
         swal({text:"cet email n'appartient pas a notre domaine"})
         else

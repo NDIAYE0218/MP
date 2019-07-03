@@ -103,8 +103,8 @@ module.exports = {
 }
 function sendmail(to, crypto, option) {
     var etat = (option == 0) ? " nouvelle inscription " : " demande de renouvellement "
-    var lien = "http://localhost:4200/Reinitialisation/" + crypto
-    var message = "<h2>Bonjour, <br>Suite a votre" + etat + "veuillez cliquer <a href=\"" + lien + "\">ici</a> pour creer un nouveau mot de passe.</h2>"
+    var lien = "http://10.75.87.133:81/Reinitialisation/" + crypto
+    var message = "<h2>Bonjour, <br>Suite a votre" + etat + "veuillez cliquer <a href=\"" + lien + "\">ici</a> ou copier puis coller ce lien dans un navigateur</h2>  <h6>("+lien+")</h6> <h2>pour creer un nouveau mot de passe.</h2>"
     var mailOptions = {
         from: '"Ne pas repondre (Alerte des Marchés Publics)" <neparepondre.AMP@ville-clichy.fr>', // sender address
         to: to, // list of receivers

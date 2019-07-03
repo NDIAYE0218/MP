@@ -25,7 +25,7 @@ export class ForgetPasswordComponent implements OnInit {
     if(Password!=PasswordConf)
     swal({title: "Non conformité des mot de passe", type:"warning",timer:15000})
     else{
-      var data={Crypto:crypto,MDP:Password,Email:Email}
+      var data={Crypto:crypto,MDP:Password,Email:Email.toLowerCase()}
       this.usersservice.Update_password(data).subscribe((data:any)=>{
         console.log(data)
         if(data.etat=="dead")

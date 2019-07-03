@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class MarcheService {
-  uri = 'http://localhost:4000';
+  uri = 'http://10.75.87.133:4000';
   nb_pre=0 //nbre de mois a soustraire de la date de cloture
   ns_pre=0 //nbre de semaine a soustraire de la date de cloture
   constructor(private http: HttpClient) { }
