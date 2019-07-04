@@ -14,13 +14,13 @@ export class AjouterDirectionComponent implements OnInit {
   createForm: FormGroup;
   serviceForm: FormGroup;
   droit=-1
+  directions=[]
   constructor(private directionService: DirectionService, private fb: FormBuilder, private router: Router,private userservice:UserService) {
     this.createForm = this.fb.group({
       Nom: ['',Validators.required]
     })
 
     this.serviceForm = this.fb.group({
-      NumServ: ['',Validators.required],
       NomDG:  ['',Validators.required],
       Nom: ['',Validators.required]
     })
@@ -35,11 +35,17 @@ export class AjouterDirectionComponent implements OnInit {
     swal('Service bien ajouté')
 
   }
+  finddirection(){
+    this.directionService.getDirections().subscribe((data:any)=>{
+      this.directions=data
+    })
+  }
 
   ngOnInit() {
     if(this.userservice.Access())
     {
       this.droit=this.userservice.InfoUser().Droit
+      this.finddirection()
     }
     else
     {

@@ -23,13 +23,15 @@
       </section>
 
       <mat-form-field >
-        <input matInput placeholder="Nom de la Direction" type="text" formControlName="NomDG" #NomDG>
+        <mat-select placeholder="choisir une direction" formControlName="NomDG" #NomDG>
+          <mat-option *ngFor="let direct of directions" [value]="direct.Nom">{{direct.Nom}}</mat-option>
+        </mat-select>
       </mat-form-field>&nbsp;
       <mat-form-field >
         <input matInput placeholder="Nom du service" type="text" formControlName="Nom" #Nom1>
       </mat-form-field>&nbsp;
       <button type="submit" 
-        (click)="ajouterService(NumServ.value,NomDG.value,Nom1.value); NumServ.value='';NomDG.value='';Nom1.value=''"
+        (click)="ajouterService(NomDG.value,Nom1.value); NomDG.value='';Nom1.value=''"
         [disabled]="serviceForm.pristine || serviceForm.invalid" mat-raised-button
         color="primary">Ajouter</button>&nbsp;
         <button mat-raised-button color="accent" routerLink="/directions">Retour a la

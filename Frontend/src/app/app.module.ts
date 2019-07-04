@@ -27,6 +27,8 @@ import { ReconductionComponent } from './compoments/reconduction/reconduction.co
 import { StatistiquesComponent } from './compoments/statistiques/statistiques.component';
 import { ChartsModule } from 'ng2-charts';
 import { AvenantComponent } from './compoments/avenant/avenant.component';
+import {ɵROUTER_PROVIDERS} from '@angular/router';
+import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 const routes: Routes = [
   { path: 'marches/:id', component: MarcheComponent },
   { path: 'marches/avenant/:id', component: AvenantComponent },
@@ -102,7 +104,7 @@ display: {
     ngfModule,
     ChartsModule
   ],
-  providers: [CookieService,DirectionService,MarcheService,UserService,{provide: MAT_DATE_LOCALE, useValue: 'fr'},{ provide: MAT_DATE_FORMATS, useValue: DateFormat }],
+  providers: [ɵROUTER_PROVIDERS,{provide: LocationStrategy, useClass: HashLocationStrategy},CookieService,DirectionService,MarcheService,UserService,{provide: MAT_DATE_LOCALE, useValue: 'fr'},{ provide: MAT_DATE_FORMATS, useValue: DateFormat }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
