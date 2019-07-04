@@ -72,7 +72,7 @@
           <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Email</th>
           <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Téléphone</th>
           <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Adresse</th>
-          <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Montant mis à disposition</th>
+          <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Montant du marché</th>
           <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Type</th>
       </tr>
       <tr *ngFor="let titul of marche.Titulaire; let i=index">
@@ -118,7 +118,7 @@
       </tr>
       <tr *ngFor="let pj of marche.Piece_Jointe;">
         <td>{{pj.nom.substring(25)}}</td>
-        <td><a href="http://localhost:4000/file_marche/{{pj.nom}}" target="_blank">
+        <td><a href="http://amp.mairie-clichy.fr:4000/file_marche/{{pj.nom}}" target="_blank">
             <mat-icon>vertical_align_bottom</mat-icon>
           </a></td>
       </tr>

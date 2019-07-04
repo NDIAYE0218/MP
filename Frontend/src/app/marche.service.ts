@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class MarcheService {
-  uri = 'http://10.75.87.133:4000';
+  uri = 'http://amp.mairie-clichy.fr:4000';
   nb_pre=0 //nbre de mois a soustraire de la date de cloture
   ns_pre=0 //nbre de semaine a soustraire de la date de cloture
   constructor(private http: HttpClient) { }
@@ -40,6 +40,7 @@ export class MarcheService {
     var dateclo = new Date(dte)
     dateclo.setFullYear(dateclo.getFullYear() + (nb_mois % 12))//nbre d'année de la duré plus 
     dateclo.setMonth(dateclo.getMonth() + (nb_mois - ((nb_mois % 12) * 12)));//date cloture = date_debut+ duré initiale
+    dateclo.setDate(dateclo.getDate()-1)
     let month = String(dateclo.getMonth() + 1);
     let day = String(dateclo.getDate());
     let year = String(dateclo.getFullYear());

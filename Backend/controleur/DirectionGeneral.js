@@ -9,13 +9,24 @@ module.exports = {
 
     },
     AjouterDirection: function (req, res) {
-        var nouvelDirection = new DirectionGeneral(req.body)
-        nouvelDirection.save(function 
-            (err) {
-            if (err)
-                throw err
+        DirectionGeneral.find({}, function (err, directions) {
+            var NumDG=directions.length+1
+            req.body.NumDG=NumDG
+            var nouvelDirection = new DirectionGeneral(req.body)
+            nouvelDirection.save(function (err) {
+                if (err)
+                    throw err
+                else
+                res.json('ok')
+            })
         })
-
+        },
+    DeleteDG: function(req,res){
+        DirectionGeneral.deleteOne({Nom:req.params.Nom},function(err){
+            if(err)
+            console.log(err)
+            else
+            res.json('ok')
+        })
     }
-
 }

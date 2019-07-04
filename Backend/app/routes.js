@@ -7,10 +7,12 @@ module.exports = function(app) {
     //route des Directions
     app.get('/Directions',DirectionGeneral.listeDirection)
     .post('/Direction',DirectionGeneral.AjouterDirection)
+    .delete('/Direction/:Nom',DirectionGeneral.DeleteDG)
     //route des Services 
     .get('/Service/:dir',Services.listeService) //liste services en fonction de la direction
     .get('/Service/:dir/:serv',Services.getServices)
     .post('/Service',Services.AjouterService)
+    .delete('/Service/:Nom',Services.DeleteService)
     //route des Contactes
     .get('/Contacte/:serv',Contactes.listeContacte) //liste des contacte en fonction du services
     .get('/Contacte/:serv/:position',Contactes.getContacte)

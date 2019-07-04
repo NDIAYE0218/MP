@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DirectionService {
-  uri = 'http://10.75.87.133:4000';
+  uri = 'http://amp.mairie-clichy.fr:4000';
 
   constructor(private http: HttpClient) { }
   getDirections() {
@@ -14,18 +14,16 @@ export class DirectionService {
 getService(NomDG){
   return this.http.get(`${this.uri}/Service/`+NomDG);
 }
-creeDirections(NumDG,Nom){
+creeDirections(Nom){
   const Direction={
-    NumDG: NumDG,
-    Nom: Nom
+  Nom: Nom
   }
   return this.http.post(`${this.uri}/Direction`, Direction);
 
 }
 
-creeservice(NumServ,NomDG,Nom){
+creeservice(NomDG,Nom){
   const Service={
-    NumServ:  NumServ,
     NomDG: NomDG,
     Nom: Nom
   }

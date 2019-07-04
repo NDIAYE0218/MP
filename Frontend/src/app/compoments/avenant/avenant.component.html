@@ -197,7 +197,7 @@
 
         <mat-form-field class="field-full-width" *ngIf="marche.Format_process=='Accord cadre'">
           <input matInput placeholder="Montant minimum globale € (HT)" type="number"
-            formControlName="MontantMin_HT_glob" style="color:blue" [value]="marche.Montant_Min_HT_glob" #MontantMin_HT_glob>
+            formControlName="MontantMin_HT_glob" style="color:blue" [value]="marche.Montant_Min_HT_glob"  #MontantMin_HT_glob>
         </mat-form-field>
         <mat-form-field class="field-full-width" *ngIf="marche.Format_process=='Accord cadre'">
           <input matInput placeholder="Montant maximal globale € (HT)" type="number" [value]="marche.Montant_Max_HT_glob"
@@ -258,7 +258,7 @@
             <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Email</th>
             <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Adresse</th>
             <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Telephone</th>
-            <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Montant mis à disposition</th>
+            <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">Montant du marché</th>
             <th style="border: 1px solid black;text-align: left;padding: 8px;color: black">type</th>
         </tr>
         <tr *ngFor="let titul of marche.Titulaire; let i=index">
@@ -378,7 +378,7 @@
         </mat-form-field>
 
         <mat-form-field class="field-full-width">
-          <input matInput placeholder="Montant mis à disposition € (HT)" type="number" min="0" value="0"
+          <input matInput placeholder="Montant du marché € (HT)" type="number" min="0" value="0"
             formControlName="Montant" #Montant>
         </mat-form-field>
         <div style="width: 10%;margin: auto">
@@ -403,10 +403,10 @@
           <input matInput placeholder="Objet" type="text" formControlName="Objet" #Objet>
         </mat-form-field>
         <mat-form-field style="width: 24%;margin-right: 2%;">
-          <input matInput placeholder="Montant (HT)€" type="number" formControlName="Montant" #Montant>
+          <input matInput placeholder="Montant (HT)€" type="number" formControlName="Montant" min="0" value="0" #Montant>
         </mat-form-field>
         <mat-form-field style="width: 24%">
-          <input matInput placeholder="Durée d'une reconduction (Mois)" type="number" formControlName="Dure" #Dure>
+          <input matInput placeholder="Durée d'une reconduction (Mois)" min="0" value="0" type="number" formControlName="Dure" #Dure>
         </mat-form-field>
         <mat-form-field class="field-full-width" style="width: 100%;">
           <textarea matInput placeholder="Resumer, en quelque mot l'avenant" style="height: 100px;"

@@ -16,7 +16,6 @@ export class AjouterDirectionComponent implements OnInit {
   droit=-1
   constructor(private directionService: DirectionService, private fb: FormBuilder, private router: Router,private userservice:UserService) {
     this.createForm = this.fb.group({
-      NumDG: ['',Validators.required],
       Nom: ['',Validators.required]
     })
 
@@ -26,13 +25,13 @@ export class AjouterDirectionComponent implements OnInit {
       Nom: ['',Validators.required]
     })
    }
-  ajouterDirection(NumDG,Nom){
-    this.directionService.creeDirections(NumDG,Nom).subscribe()
+  ajouterDirection(Nom){
+    this.directionService.creeDirections(Nom).subscribe()
     swal('la direction '+Nom+' a bien été ajouté')
     this.router.navigate(['/marche/ajouter'])
   }
-  ajouterService(NumServ,NomDG,Nom){
-    this.directionService.creeservice(NumServ,NomDG,Nom).subscribe()
+  ajouterService(NomDG,Nom){
+    this.directionService.creeservice(NomDG,Nom).subscribe()
     swal('Service bien ajouté')
 
   }

@@ -184,7 +184,7 @@
             <tr>
               <th>Numero (co) traitant(s)</th>
               <th>Nom (co) traitant(s)</th>
-              <th>Montant mis à disposition € (HT)</th>
+              <th>Montant du marché € (HT)</th>
             </tr>
             <tr *ngFor="let titul of titulaire; let i = index" style="color: blue">
               <th>{{i+1}}</th>
@@ -212,7 +212,7 @@
             </mat-form-field>
 
             <mat-form-field style="width: 24%;margin-right: 0.5%;">
-              <input matInput placeholder="Montant mis à disposition € (HT)" type="number" formControlName="Montant"
+              <input matInput placeholder="Montant du marché € (HT)" type="number" formControlName="Montant"
                 #Montant>
             </mat-form-field>
             <button mat-raised-button class="field-full-width_tit"
@@ -243,7 +243,7 @@
             <tr>
               <th>Numero sous-traitant(s)</th>
               <th>Nom sous-traitant(s)</th>
-              <th>Montant mis à disposition € (HT)</th>
+              <th>Montant du marché € (HT)</th>
             </tr>
             <tr *ngFor="let soust of titulaire[i].SousTraitants; let j = index" style="color: blue">
               <th>{{j+1}}</th>
@@ -275,7 +275,7 @@
         </mat-form-field>
 
         <mat-form-field style="width: 24%;margin-right: 0.5%;">
-          <input matInput placeholder="Montant mis à disposition € (HT))" type="number" formControlName="Montant"
+          <input matInput placeholder="Montant du marché € (HT))" type="number" formControlName="Montant"
             #Montant_0>
         </mat-form-field>
         <button mat-raised-button class="field-full-width_tit"
