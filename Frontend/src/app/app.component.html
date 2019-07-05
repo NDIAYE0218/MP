@@ -10,7 +10,7 @@
     <button mat-raised-button color="accent" class="men-item" *ngIf="droit>=0"> <mat-icon>notification_important</mat-icon>Détails des notifications</button>
     <button mat-raised-button color="accent" class="men-item" routerLink="/utilisateur" *ngIf="droit>=3"><mat-icon>account_box</mat-icon>Utilisateurs</button>
     <button mat-raised-button color="accent" class="men-item" routerLink="/direction/ajouter" *ngIf="droit>=0"><mat-icon>library_add</mat-icon>Ajout Directions et services</button>
-    <button mat-raised-button color="accent" class="men-item"><mat-icon>help</mat-icon>Aide et Manuel d'utilisation</button>
+    <button mat-raised-button color="accent" class="men-item" routerLink="/ddd"><mat-icon>help</mat-icon>Tableau des données essentielles</button>
     <button mat-raised-button color="accent" class="men-item" (click)="Deconnexion()"> <mat-icon *ngIf="droit>=0">exit_to_app</mat-icon><span *ngIf="droit>=0">Deconnexion</span> <mat-icon *ngIf="droit==-1">person_outline</mat-icon><span *ngIf="droit==-1">Connexion</span></button>
     <mat-menu #marche="matMenu">
       <button mat-menu-item routerLink="/marches"><mat-icon>view_list</mat-icon>Voir tous les Marchés</button>

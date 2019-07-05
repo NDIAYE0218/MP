@@ -319,7 +319,7 @@
         </ng-container>
         <ng-container matColumnDef="dte_cre">
           <th mat-header-cell *matHeaderCellDef>Date de creation&nbsp;</th>
-          <td mat-cell *matCellDef="let element">{{element.Datecreation}}&nbsp;</td>
+          <td mat-cell *matCellDef="let element">{{getDate(element.Datecreation)}}&nbsp;</td>
         </ng-container>
         <ng-container matColumnDef="dte_clo">
           <th mat-header-cell *matHeaderCellDef>Date de cloture&nbsp;</th>

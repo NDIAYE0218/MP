@@ -165,7 +165,7 @@ export class AjouterMarcheComponent implements OnInit {
       An: new Date().getFullYear().toString().substring(2),
       Total_relance: 0,//total des notification, aide au calcul de la date des notification
       DateNotific: _dates_init.dte_notif,
-      Datecreation: this.getDate(),
+      Datecreation: this.getDate_t(),
       Nature: Nature,
       Type_process: TypeProcess,
       Format_process: FormatProcess,
@@ -341,5 +341,9 @@ export class AjouterMarcheComponent implements OnInit {
       this.vuac = false; this.vuordinaire = true
     }
 
+  }
+  getDate_t(){
+    var event = new Date();
+    return event.toLocaleDateString('fr-FR')
   }
 }

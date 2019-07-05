@@ -251,6 +251,5 @@ function CreerDateNotification(dte, nb_mois) {
 }
 function   getDate() {
     var event = new Date();
-    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    return event.toLocaleDateString('fr-FR', options)
+    return event.toLocaleDateString('fr-FR')
   }
