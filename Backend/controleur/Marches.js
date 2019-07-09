@@ -133,8 +133,21 @@ module.exports = {
         Marches.find({}, function (err, marche) {
             res.json(stat_finances(marche, parseInt(req.params.option)))
         })
-    }
+    },
+    getDetailNotification: function(req,res){
+        Marches.find({}, function (err, marche) {
+            var ret=[]
+            var dte=new Date()
+            dte.setMonth(dte.getMonth()+1)
+            for(var i=0;i<marche.length;i++){
+            if(marche[i].Date_Cloture_ini.split('/')[2]==dte.getFullYear() && marche[i].Date_Cloture_ini.split('/')[1]>=dte.getMonth())
+            ret.push(marche[i])
+            }
+            var ret1=sort_marche(ret,0)
+            res.json(sort_marche(ret1))
+        })
 
+    }
 }
 function stat_finances(data, option) {
     var Ret = { Label: [], Montant_min: [], Montant_max: [] }
@@ -151,7 +164,7 @@ function stat_finances(data, option) {
                 Ret.Montant_max.push(data[i].Montant_Max_HT_glob)
             }
         }
-        return Ret
+       
     }
     if(option==1){
         for (var i = 0; i < data.length; i++) {
@@ -166,9 +179,108 @@ function stat_finances(data, option) {
                 Ret.Montant_max.push(data[i].Montant_Max_HT_glob)
             }
         }
-        return Ret
+      
     }
+    if(option==2){
+        for (var i = 0; i < data.length; i++) {
+            if (Ret.Label.includes("20"+data[i].An)) {
+                var j = Ret.Label.indexOf("20"+data[i].An)
+                Ret.Montant_min[j] += data[i].Montant_Min_HT_glob
+                Ret.Montant_max[j] += data[i].Montant_Max_HT_glob
+            }
+            else
+            {
+                Ret.Label.push("20"+data[i].An)
+                Ret.Montant_min.push(data[i].Montant_Min_HT_glob)
+                Ret.Montant_max.push(data[i].Montant_Max_HT_glob)
+            }
+        }
+       
+    }
+    if(option==3){
+        for (var i = 0; i < data.length; i++) {
+            if (Ret.Label.includes(data[i].Type_Marche)) {
+                var j = Ret.Label.indexOf(data[i].Type_Marche)
+                Ret.Montant_min[j] +=1 
+            }
+            else
+            {
+                Ret.Label.push(data[i].Type_Marche)
+                Ret.Montant_min.push(1)
+            }
+        }
+       
+    }
+    if(option==4){
+        for (var i = 0; i < data.length; i++) {
+            if (Ret.Label.includes(data[i].Format_process)) {
+                var j = Ret.Label.indexOf(data[i].Format_process)
+                Ret.Montant_min[j] +=1 
+            }
+            else
+            {
+                Ret.Label.push(data[i].Format_process)
+                Ret.Montant_min.push(1)
+            }
+        }
+       
+    }
+    if(option==5){
+        for (var i = 0; i < data.length; i++) {
+            if (Ret.Label.includes(data[i].Type_process)) {
+                var j = Ret.Label.indexOf(data[i].Type_process)
+                Ret.Montant_min[j] +=1 
+            }
+            else
+            {
+                Ret.Label.push(data[i].Type_process)
+                Ret.Montant_min.push(1)
+            }
+        }
+       
+    }
+    if(option==6){
+        for (var i = 0; i < data.length; i++) {
+            if (Ret.Label.includes(data[i].Nature)) {
+                var j = Ret.Label.indexOf(data[i].Nature)
+                Ret.Montant_min[j] +=1 
+            }
+            else
+            {
+                Ret.Label.push(data[i].Nature)
+                Ret.Montant_min.push(1)
+            }
+        }
+       
+    }
+    return Ret
 }
+function sort_marche(data,option=1){
+    var ret=[]  
+    if(option) //trie mensuelle
+    {for(var i=0;i<13;i++)
+    {
+      for(var j=0;j<data.length;j++)
+      if(parseInt(data[j].Date_Cloture_ini.split('/')[1])==i)
+      {
+        ret.push(data[j])
+        data.splice(j,1)
+      }
+    }}
+    else //trie journalier
+    {for(var i=0;i<32;i++)
+        {
+          for(var j=0;j<data.length;j++){
+            if(parseInt(data[j].Date_Cloture_ini.split('/')[0])==i)
+          {
+            ret.push(data[j])
+            data.splice(j,1)
+          }
+        }
+        }}
+    return ret
+  }
+  
 function traiteur_upload(result) {
     //fonction permettant l'insertion des marchés
     /**
@@ -186,7 +298,7 @@ function traiteur_upload(result) {
             if (typeof data[j].C != 'undefined') {
                 marche.objet = data[j].D
                 marche.Date_debut=data[j].L+"$$"
-                marche.Datecreation=getDate()
+                marche.Datecreation=getDate()// faire monter la solution mais avan réglé le problède de date de création
                 marche.An = data[j].C.substring(0, 2)
                 marche.NumMarche = data[j].C.substring(data[j].C.length - 3, data[j].C.length)
                 marche.Total_relance = 0
@@ -251,5 +363,6 @@ function CreerDateNotification(dte, nb_mois) {
 }
 function   getDate() {
     var event = new Date();
-    return event.toLocaleDateString('fr-FR')
+    var ret= event.toLocaleDateString('fr-FR').split('-')
+    return ret[2]+"/"+ret[1]+"/"+ret[0]
   }

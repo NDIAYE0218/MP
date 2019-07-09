@@ -4,13 +4,17 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class MarcheService {
-  uri = 'http://amp.mairie-clichy.fr:4000';
+  // uri = 'http://amp.mairie-clichy.fr:4000';
+  uri = 'http://localhost:4000';
   nb_pre=0 //nbre de mois a soustraire de la date de cloture
   ns_pre=0 //nbre de semaine a soustraire de la date de cloture
   constructor(private http: HttpClient) { }
 
   Statistiques(option){
     return this.http.get(`${this.uri}/Statistiques/`+option)
+  }
+  getNotif(){
+    return this.http.get(`${this.uri}/Details/Notification`)
   }
   CreerMarcher(Marche) {
     return this.http.post(`${this.uri}/Marche`, Marche);

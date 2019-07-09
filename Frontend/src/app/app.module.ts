@@ -31,6 +31,7 @@ import { AvenantComponent } from './compoments/avenant/avenant.component';
 import {ɵROUTER_PROVIDERS} from '@angular/router';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import { TableauDonneesEsentielsComponent } from './compoments/tableau-donnees-esentiels/tableau-donnees-esentiels.component';
+import { DetailNotifComponent } from './compoments/detail-notif/detail-notif.component';
 const routes: Routes = [
   { path: 'marches/:id', component: MarcheComponent },
   { path: 'marches/avenant/:id', component: AvenantComponent },
@@ -44,7 +45,8 @@ const routes: Routes = [
   { path: 'Connexion', component: ConnexionComponent },
   { path: 'Marches/reconduire/:rep/:_id', component: ReconductionComponent },
   { path: 'Statistiques/:type/:option', component: StatistiquesComponent },
-  { path: 'ddd', component: TableauDonneesEsentielsComponent },
+  { path: 'Tableau des données essentielles', component: TableauDonneesEsentielsComponent },
+  {path:'Détails/Alerte', component:DetailNotifComponent},
   { path: '', redirectTo: 'Connexion', pathMatch: 'full' }
 ];
 
@@ -77,6 +79,7 @@ display: {
     StatistiquesComponent,
     AvenantComponent,
     TableauDonneesEsentielsComponent,
+    DetailNotifComponent,
   ],
   imports: [
     BrowserModule,

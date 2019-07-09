@@ -2,6 +2,7 @@ var DirectionGeneral=require('../controleur/DirectionGeneral')
 var Services=require('../controleur/Services')
 var Contactes=require('../controleur/Contactes')
 var Marches=require('../controleur/Marches')
+var Marchinf=require('../controleur/MarcheInformatique')
 var Users=require('../controleur/Users')
 module.exports = function(app) {
     //route des Directions
@@ -38,6 +39,14 @@ module.exports = function(app) {
     .delete('/Users/:_id',Users.Delete)
     //route des statistiques
     .get('/Statistiques/:option',Marches.statistiques)
+    //route details notification
+    .get('/Details/Notification',Marches.getDetailNotification)
     //.post('/Marche/upload',Marches.uploderMarche) //pour l'ajout des marché depuis un fichier CSV ou .xlsx
     //route des statistiques
+
+    //route specifique a l'informatique
+    .post('/Informatique/marches',Marchinf.RechercherMarcher)
+    .post('/Informatique/marche',Marchinf.ajouterMarcher)
+    .put('/Informatique/marche',Marchinf.UpdateMarket)
+    .delete('/Informatique/marche/:_id',Marchinf.DeleteMarket)
 }
