@@ -7,8 +7,8 @@ import {Router} from '@angular/router'
   providedIn: 'root'
 })
 export class UserService {
-  // uri = 'http://amp.mairie-clichy.fr:4000';
-  uri = 'http://localhost:4000';
+  uri = 'http://amp.mairie-clichy.fr:4000';
+  // uri = 'http://localhost:4000';
   constructor(private http: HttpClient, private cookieservice: CookieService,private route:Router) { }
   GetAll() {
     return this.http.get(`${this.uri}/Users`)

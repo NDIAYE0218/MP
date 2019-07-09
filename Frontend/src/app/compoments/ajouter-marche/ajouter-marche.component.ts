@@ -43,8 +43,8 @@ export class AjouterMarcheComponent implements OnInit {
   accept = '*'
   files: File[] = []
   progress: number
-  // url = 'http://amp.mairie-clichy.fr:4000/Marche/file_marche'
-  url = 'http://localhost:4000/Marche/file_marche';
+  url = 'http://amp.mairie-clichy.fr:4000/Marche/file_marche'
+  //url = 'http://localhost:4000/Marche/file_marche';
   hasBaseDropZoneOver: boolean = false
   httpEmitter: Subscription
   httpEvent: HttpEvent<{}>

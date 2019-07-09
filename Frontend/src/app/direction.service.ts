@@ -4,8 +4,8 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DirectionService {
-  // uri = 'http://amp.mairie-clichy.fr:4000';
-  uri = 'http://localhost:4000';
+  uri = 'http://amp.mairie-clichy.fr:4000';
+  // uri = 'http://localhost:4000';
 
   constructor(private http: HttpClient) { }
   getDirections() {
