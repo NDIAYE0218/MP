@@ -1,0 +1,16 @@
+<div>
+  <mat-card class="connexion">
+    <h2 style="text-align: center"><mat-icon class="ic_con">perm_identity</mat-icon></h2>
+    <form [formGroup]="connForm" class="create-form">
+      <mat-form-field class="field">
+        <input placeholder="Email *" type="email" matInput formControlName="Login" #Login>
+      </mat-form-field>
+      <mat-form-field class="field">
+        <input placeholder="Mot de passe*" type="password" matInput formControlName="MDP" #MDP>
+      </mat-form-field>
+      <button type="submit" (click)="connexion(Login.value,MDP.value)"
+        [disabled]="connForm.pristine || connForm.invalid" mat-raised-button color="primary">Connexion</button> 	&nbsp;
+        <button type="submit" (click)="forget()" mat-raised-button color="accent">Mot de passe oublié</button>
+    </form>
+  </mat-card>
+</div>

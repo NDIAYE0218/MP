@@ -1,0 +1,22 @@
+.img{
+    width: 10%;
+    height: 85%;
+}
+.titre{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 170%;
+    margin-left: 21%;
+    margin-right: 21%;
+    color: rgb(24, 56, 170); 
+}
+.men{
+    height: 40px;
+    background-color: rgba(24, 56, 170, 0.781); 
+    margin-right: 2em;
+}
+.men-items{
+    margin-left: 8em;
+}
+.men-item{
+    margin-left: 2em;
+}
