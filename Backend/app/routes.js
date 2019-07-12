@@ -47,6 +47,7 @@ module.exports = function(app) {
     //route specifique a l'informatique
     .post('/Informatique/marches',Marchinf.RechercherMarcher)
     .post('/Informatique/marche',Marchinf.ajouterMarcher)
+    .post('/Informatique/Marches/upload',Marchinf.UploadMarket)
     .put('/Informatique/marche',Marchinf.UpdateMarket)
     .delete('/Informatique/marche/:_id',Marchinf.DeleteMarket)
 }

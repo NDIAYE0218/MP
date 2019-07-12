@@ -1,41 +1,13 @@
 <mat-toolbar>
   <img src="../assets/img/AMP.PNG" class="img">
-  <span class="titre">AMP: Alerte des Marchés Publics</span>
+  <span class="titre">SUIVI DE CONTRATS</span>
   <img src="../assets/img/images.png" class="img">
 </mat-toolbar>
 <mat-toolbar class="men">
   <div class="men-items">
-    <button mat-raised-button [matMenuTriggerFor]="marche" color="accent" class="men-item"><mat-icon>shopping_cart</mat-icon>Marchés</button>
-    <button mat-raised-button [matMenuTriggerFor]="stats" color="accent" class="men-item"><mat-icon>bar_chart</mat-icon>Statistiques</button>
-    <button mat-raised-button color="accent" class="men-item" routerLink="/Détails/Alerte"> <mat-icon>notification_important</mat-icon>Détails Alerte</button>
-    <button mat-raised-button color="accent" class="men-item" routerLink="/utilisateur" *ngIf="droit>=3"><mat-icon>account_box</mat-icon>Utilisateurs</button>
-    <button mat-raised-button color="accent" class="men-item" routerLink="/direction/ajouter" *ngIf="droit>=0"><mat-icon>library_add</mat-icon>Ajout Directions et services</button>
-    <button mat-raised-button color="accent" class="men-item" routerLink="/Tableau des données essentielles"><mat-icon>help</mat-icon>Tableau des données essentielles</button>
-    <button mat-raised-button color="accent" class="men-item" (click)="Deconnexion()"> <mat-icon *ngIf="droit>=0">exit_to_app</mat-icon><span *ngIf="droit>=0">Deconnexion</span> <mat-icon *ngIf="droit==-1">person_outline</mat-icon><span *ngIf="droit==-1">Connexion</span></button>
-    <mat-menu #marche="matMenu">
-      <button mat-menu-item routerLink="/marches"><mat-icon>view_list</mat-icon>Voir tous les Marchés</button>
-      <button mat-menu-item [matMenuTriggerFor]="AjoutMarche" *ngIf="droit>=0" ><mat-icon>add_shopping_cart</mat-icon>Ajouter Marchés</button>
-    </mat-menu>
-    <mat-menu #stats="matMenu">
-      <button mat-menu-item [matMenuTriggerFor]="finances"> <mat-icon>euro_symbol</mat-icon>Statistiques financiers</button>
-      <button mat-menu-item [matMenuTriggerFor]="process" ><mat-icon>bubble_chart</mat-icon>Statistiques Procedures</button>
-    </mat-menu>
-    <mat-menu #AjoutMarche="matMenu">
-      <button mat-menu-item routerLink="/marche/ajouter"><mat-icon>edit</mat-icon>Depuis un formulaire</button>
-      <button mat-menu-item routerLink="marche/ajouter/csv"><mat-icon>cloud_upload</mat-icon>importer un fichier CSV</button>
-    </mat-menu>
-
-    <mat-menu #finances="matMenu">
-        <button mat-menu-item routerLink="/Statistiques/financiers/directions"><mat-icon>pie_chart</mat-icon>En fonction des Directions</button>
-        <button mat-menu-item routerLink="/Statistiques/financiers/services"><mat-icon>show_chart</mat-icon>En fonction des services</button>
-        <button mat-menu-item routerLink="/Statistiques/financiers/années"><mat-icon>table_chart</mat-icon>Montant total par année</button>
-    </mat-menu>
-    <mat-menu #process="matMenu" >
-      <button mat-menu-item routerLink="/Statistiques/des procedures/type de Marché"><mat-icon>view_carousel</mat-icon>Type de marché</button>
-      <button mat-menu-item routerLink="/Statistiques/des procedures/forme de Marché"><mat-icon>graphic_eq</mat-icon>Forme de marché</button>
-      <button mat-menu-item routerLink="/Statistiques/des procedures/type de procedure"><mat-icon>scatter_plot</mat-icon>Type de procedure</button>
-      <button mat-menu-item routerLink="/Statistiques/des procedures/nature du Marché"><mat-icon>show_chart</mat-icon>Nature du marché</button>
-  </mat-menu>
+      <button mat-raised-button routerLink="/marches" color="accent" class="men-item"><mat-icon>view_list</mat-icon> Voir tous les Marchés</button>
+      <button mat-raised-button routerLink="/marches/Ajouter" class="men-item" color="accent"><mat-icon>add_shopping_cart</mat-icon> Ajouter Marchés</button>
+      <button mat-raised-button routerLink="/marches/upload" class="men-item" color="accent"><mat-icon>vertical_align_top</mat-icon> Uploder Marchés</button>
   </div>
 </mat-toolbar>
 <div>

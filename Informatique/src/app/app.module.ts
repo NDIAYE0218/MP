@@ -7,47 +7,19 @@ import { MatToolbarModule, MatFormFieldModule, MatInputModule,MatExpansionModule
 import { ngfModule } from "angular-file"
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DirectionsComponent } from './compoments/directions/directions.component';
-import { DirectionComponent } from './compoments/direction/direction.component';
-import { AjouterDirectionComponent } from './compoments/ajouter-direction/ajouter-direction.component';
-import { DirectionService } from './direction.service';
-import {UserService} from './user.service'
 import {ExcelService} from './excel.service'
 import {MarcheService} from './marche.service'
-import { MarchesComponent } from './compoments/marches/marches.component';
-import { MarcheComponent } from './compoments/marche/marche.component';
-import { AjouterMarcheComponent } from './compoments/ajouter-marche/ajouter-marche.component';
 import { FileUploadModule } from 'ng2-file-upload';
-import { CsvMarcheComponent } from './compoments/csv-marche/csv-marche.component';
-import { ConnexionComponent } from './compoments/connexion/connexion.component';
-import { AjouterUsersComponent } from './compoments/ajouter-users/ajouter-users.component';
-import { UtilisateursComponent } from './compoments/utilisateurs/utilisateurs.component';
-import { ForgetPasswordComponent } from './compoments/forget-password/forget-password.component';
 import { CookieService } from "angular2-cookie/services/cookies.service";
-import { ReconductionComponent } from './compoments/reconduction/reconduction.component';
-import { StatistiquesComponent } from './compoments/statistiques/statistiques.component';
 import { ChartsModule } from 'ng2-charts';
-import { AvenantComponent } from './compoments/avenant/avenant.component';
 import {ɵROUTER_PROVIDERS} from '@angular/router';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
-import { TableauDonneesEsentielsComponent } from './compoments/tableau-donnees-esentiels/tableau-donnees-esentiels.component';
-import { DetailNotifComponent } from './compoments/detail-notif/detail-notif.component';
+import { MarcheComponent } from './compoments/marche/marche.component';
+import { MarchesComponent } from './compoments/marches/marches.component';
 const routes: Routes = [
-  { path: 'marches/:id', component: MarcheComponent },
-  { path: 'marches/avenant/:id', component: AvenantComponent },
-  { path: 'direction/ajouter', component: AjouterDirectionComponent },
-  { path: 'marche/ajouter', component: AjouterMarcheComponent },
-  { path: 'marche/ajouter/csv', component: CsvMarcheComponent },
-  { path: 'utilisateur', component: UtilisateursComponent },
-  { path: 'utilisateur/ajout', component: AjouterUsersComponent },
-  { path: 'Reinitialisation/:crypto', component: ForgetPasswordComponent },
-  { path: 'marches', component: MarchesComponent },
-  { path: 'Connexion', component: ConnexionComponent },
-  { path: 'Marches/reconduire/:rep/:_id', component: ReconductionComponent },
-  { path: 'Statistiques/:type/:option', component: StatistiquesComponent },
-  { path: 'Tableau des données essentielles', component: TableauDonneesEsentielsComponent },
-  {path:'Détails/Alerte', component:DetailNotifComponent},
-  { path: '', redirectTo: 'Connexion', pathMatch: 'full' }
+  { path: 'marches/:option', component:  MarcheComponent},
+  { path: 'marches', component:  MarchesComponent},
+  { path: '', redirectTo: 'marches', pathMatch: 'full' }
 ];
 
 const DateFormat = {
@@ -64,22 +36,8 @@ display: {
 @NgModule({
   declarations: [
     AppComponent,
-    DirectionsComponent,
-    DirectionComponent,
-    AjouterDirectionComponent,
-    MarchesComponent,
     MarcheComponent,
-    AjouterMarcheComponent,
-    CsvMarcheComponent,
-    ConnexionComponent,
-    AjouterUsersComponent,
-    UtilisateursComponent,
-    ForgetPasswordComponent,
-    ReconductionComponent,
-    StatistiquesComponent,
-    AvenantComponent,
-    TableauDonneesEsentielsComponent,
-    DetailNotifComponent,
+    MarchesComponent,
   ],
   imports: [
     BrowserModule,
@@ -111,7 +69,7 @@ display: {
     ngfModule,
     ChartsModule
   ],
-  providers: [ɵROUTER_PROVIDERS,{provide: LocationStrategy, useClass: HashLocationStrategy},CookieService,DirectionService,MarcheService,UserService,ExcelService,{provide: MAT_DATE_LOCALE, useValue: 'fr'},{ provide: MAT_DATE_FORMATS, useValue: DateFormat }],
+  providers: [ɵROUTER_PROVIDERS,{provide: LocationStrategy, useClass: HashLocationStrategy},CookieService,MarcheService,ExcelService,{provide: MAT_DATE_LOCALE, useValue: 'fr'},{ provide: MAT_DATE_FORMATS, useValue: DateFormat }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

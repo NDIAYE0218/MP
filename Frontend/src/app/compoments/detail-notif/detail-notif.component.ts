@@ -27,4 +27,5 @@ export class DetailNotifComponent implements OnInit {
     else
       return "date non definit"
   }
+  
 }
