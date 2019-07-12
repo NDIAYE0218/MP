@@ -68,10 +68,10 @@ export class MarchesComponent implements OnInit {
     doc.setFontType('bold'); doc.text(30, long+15, 'Email titulaire:'); doc.setFontType(''); doc.text(78, long+15, element.Mail)
     doc.setFontType('bold'); doc.text(30, long+20, 'N° telephone titulaire:'); doc.setFontType(''); doc.text(78, long+20, element.Tel)
     doc.setFontType('bold'); doc.text(30, long+25, 'Adresse titulaire:'); doc.setFontType(''); doc.text(78, long+25, element.Adresse+" "+element.CP)
-    doc.setFontType('bold'); doc.text(30, long+30, 'Montant:'); doc.setFontType(''); doc.text(78, long+30, element.Montant+" ")
-    doc.setFontType('bold'); doc.text(30, long+35, 'Date Notification:'); doc.setFontType(''); doc.text(78, long+35, this.getDate(element.DateNotification))
+    doc.setFontType('bold'); doc.text(30, long+30, 'Montant TTC (€):'); doc.setFontType(''); doc.text(78, long+30, element.Montant+" ")
+    doc.setFontType('bold'); doc.text(30, long+35, 'Date Notification:'); doc.setFontType(''); doc.text(78, long+35, element.DateNotification)
     doc.setFontType('bold'); doc.text(30, long+40, 'Montant:'); doc.setFontType(''); doc.text(78, long+40, element.Duree+" ")
-    doc.setFontType('bold'); doc.text(30, long+45, 'Date Notification:'); doc.setFontType(''); doc.text(78, long+45, this.getDate(element.DateFin))
+    doc.setFontType('bold'); doc.text(30, long+45, 'Date Notification:'); doc.setFontType(''); doc.text(78, long+45, element.DateFin)
     doc.setFontType('bold'); doc.text(30, long+50, 'Mois restant:'); doc.setFontType(''); doc.text(78, long+50, this.mois_restant(element.DateFin)+"")
     doc.setFontType('bold'); doc.text(30, long+55, 'Reconduction:'); doc.setFontType(''); doc.text(78, long+55, element.TypeReconduction)
     doc.setFontType('bold'); doc.text(30, long+60, 'Observation:'); doc.setFontType(''); doc.text(78, long+60, element.Observation)
@@ -123,10 +123,10 @@ export class MarchesComponent implements OnInit {
             "N°":(data[i].NumMarche.toString().length == 1 && !this.verif(data[i])) ? data[i].An + "-00" + data[i].NumMarche : (data[i].NumMarche.toString().length == 2 && !this.verif(data[i])) ? data[i].An + "-0" + data[i].NumMarche :(typeof data[i].Num_nonExo!='undefined')?data[i].Num_nonExo: data[i].An + "-" + data[i].NumMarche + "",
             "Objet":data[i].Objet,
             "Info titulaire":data[i].NomTitulaire+"  "+data[i].Tel+"  "+data[i].Mail+"  "+data[i].Adresse+"  "+data[i].CP,
-            "Montant":data[i].Montant,
+            "Montant TTC (€)":data[i].Montant,
             "Date de Notification":data[i].DateNotification,
             "Durée":data[i].Duree,
-            "Date fin":this.getDate(data[i].DateFin),
+            "Date fin":data[i].DateFin,
             "Mois restant":this.mois_restant(data[i].DateFin),
             "Reconduction":data[i].TypeReconduction,
             "Observation":data[i].Observation,

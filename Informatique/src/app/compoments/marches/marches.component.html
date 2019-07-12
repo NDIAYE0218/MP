@@ -43,14 +43,14 @@
           *ngIf="element.Adresse!=''">({{element.Adresse}}, {{element.CP}})</i>&nbsp;</td>
     </ng-container>
     <ng-container matColumnDef="Montant">
-      <th mat-header-cell *matHeaderCellDef style="width: 6%;text-align: center;font-size: 120%">Montant&nbsp;</th>
-      <td mat-cell *matCellDef="let element" style="width: 6%;text-align: center">&nbsp;{{element.Montant}}&nbsp;</td>
+      <th mat-header-cell *matHeaderCellDef style="width: 6%;text-align: center;font-size: 120%">Montant TTC &nbsp;</th>
+      <td mat-cell *matCellDef="let element" style="width: 6%;text-align: center">&nbsp;{{element.Montant}} €&nbsp;</td>
     </ng-container>
     <ng-container matColumnDef="Date_notif">
       <th mat-header-cell *matHeaderCellDef style="width: 9%;text-align: center;font-size: 120%">Date de
         Notification&nbsp;</th>
       <td mat-cell *matCellDef="let element" style="width: 9%;text-align: center">
-        &nbsp;{{getDate(element.DateNotification)}}&nbsp;</td>
+        &nbsp;{{element.DateNotification}}&nbsp;</td>
     </ng-container>
     <ng-container matColumnDef="duree">
       <th mat-header-cell *matHeaderCellDef style="width: 6%;text-align: center;font-size: 120%">Durée&nbsp;</th>
@@ -61,7 +61,7 @@
     <ng-container matColumnDef="dte_fin">
       <th mat-header-cell *matHeaderCellDef style="width: 9%;text-align: center;font-size: 120%">Date fin&nbsp;</th>
       <td mat-cell *matCellDef="let element" style="width: 9%;text-align: center">
-        &nbsp;{{getDate(element.DateFin)}}&nbsp;</td>
+        &nbsp;{{element.DateFin}}&nbsp;</td>
     </ng-container>
     <ng-container matColumnDef="mois_rest">
       <th mat-header-cell *matHeaderCellDef style="width: 6%;text-align: center;font-size: 120%"> Mois restant</th>
